@@ -32,25 +32,95 @@ const snacks = [
 
 let currentCal = 0;
 let adjustment = 0;
+const activityLevels = [
+  {value: 1.2, text: "Sedentary (little to no exercise)"},
+  {value: 1.375, text: "Lightly active (light exercise 1-3 days/week)"},
+  {value: 1.55, text: "Moderately active (moderate exercise 3-5 days/week)"},
+  {value: 1.725, text "Very active (hard exercise 6-7 days/week)"},
+  {value: 1.9, text "Extremely active (hard daily exercise and physical job)"}
+];
+
+function acceptDisclaimer() {
+  if (document.getElementByID('acknowledge').checked) {
+    document.getElementByID('disclaimerModal').style.display = 'none';
+    document.getElementByID('mainContent').style.display = 'block';
+  } else {
+      alert('Please acknowledge the terms.');
+  }
+}
+
+function showTerms() {
+  document.getElementByID('termsModal').style.display = 'block';
+}
+
+function showPrivacy() {
+  document.getElementByID('privacyModal').style.display = 'block':
+}
+
+function updateActivityText(value) {
+  document.GetElementByID('activityText').innerText = activityLevels[value].text;
+}
+
+function toggleUnits() {
+  const units = document.getElementByID('units').value;
+  if (units === 'metric') {
+    document.getElementByID('heightImperial').style.display = 'none';
+    document.getElementByID('heightMetric').style.display = 'block';
+    document.getElementByID('weightImperial').style.display = 'none';
+    document.getElementByID('weightMetric').style.display = 'block';
+    document.getElementByID('height').required = true;
+    document.getElementByID('weight').required = true;
+    document.getElementByID('ft').required = false;
+    document.getElementByID('lb').required = false;
+  } else {
+    document.getElementByID('heightImperial').style.display = 'block';
+    document.getElementByID('heightMetric').style.display = 'none';
+    document.getElementByID('weightImperial').style.display = 'block';
+    document.getElementByID('weightMetric').style.display = 'none';
+    document.getElementByID('height').required = false;
+    document.getElementByID('weight').required = false;
+    document.getElementByID('ft').required = true;
+    document.getElementByID('lb').required = true;
+  }
+}
 
 function calculate() {
   const gender = document.getElementByID('gender').value;
   const age = parseFloat(document.getElementByID('age').value);
-  const ft = parseFloat(document.getElementByID('ft').value) || 0;
-  const inc = parseFloat(document.getElementByID('in').value) || 0;
-  const lb = parseFloat(document.getElementByID('lb').value);
-  const activity = parseFloat(documet.getElementByID('activity').value);
+  const units = document.getElementID('units').value || 'imperial';
+  let height, weight;
+  if (units === 'metric') {
+    height = parseFloat(documnet.getElementID('height').value);
+    weight = parseFloat(documnet.getElementID('weight').value);
+  } else {
+    const ft = parseFloat(document.getElementByID('ft').value) || 0;
+    const inc = parseFloat(document.getElementByID('in').value) || 0;
+    height = (ft * 12 + inc) * 2.54;
+    weight = parseFloat(document.getElementByID('lb').value) / 2.20462;
+  }
+  const activityIndex = parseInt(documet.getElementByID('activity').value);
+  const activity = activityLevels[activityIndex].value;
   const goal = document.getElementByID('goal').value;
 
   //Validate inputs
-  if (!gender || !age || !ft || !lb || !activity || !goal) {
-    alert('Please fill in all required fields.');
+  if (!gender || isNaN(age) || age < 18 || age > 78 || isNaN(height) || isNaN(weight) || weight <= 0 || activityIndex === 0 || !goal) {
+    alert('Please fill in all required fields correctly. Age must be 18-78, weight/height must be positive and in rage');
     return;
   }
-
-  //Convert imperial to metric for Mifflin-St Jeor formula
-  const height = (ft * 12 + inc) *2.54; //feet and inches to cm
-  const weight = lb / 2.20462; //pounds to kilograms
+  if (units === 'metric' && (height < 90 || height > 250)) {
+    alert('Height must be between 90 and 250 cm.');
+    return;
+  } else if (units !== 'metric' && (parseFloat(document.getElementByID('ft').value) < 3 || parseFloat(document.getElementByID('ft').value) > 8)){
+    alert('Height must be between 3 and 8 ft.');
+    return;
+  }
+  if (units === 'metric' && (weight < 20 || weight > 250)) {
+    alert('Weight must be between 20 and 250 kg.');
+    return;
+  } else if (units !== 'metric' && (parseFloat(document.getElementByID('lb').value) < 50 || parseFloat(document.getElementByID('lb').value) > 500)){
+    alert('Height must be between 50 and 500 lb.');
+    return;
+  }
 
   if (goal == 'lose') adjustment = -500;
   else if (goal == 'gain') adjustment = 500;
@@ -124,6 +194,13 @@ function regenerateMeal() {
   generateMealPlan();
 }
 
-function ClearAll() {
-  document.getElementByID('NutriTarget').reset;
+function clearAll() {
+  document.getElementByID('NutriTarget').reset();
   document.getElementByID('output').style.display = 'none';
+  updateActivityText(0);
+  ToggleUnits();
+}
+
+//Initial setup
+toggleUnits();
+updateActivityText(0);
