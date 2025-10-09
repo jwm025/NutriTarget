@@ -36,8 +36,8 @@ const activityLevels = [
   {value: 1.2, text: "Sedentary (little to no exercise)"},
   {value: 1.375, text: "Lightly active (light exercise 1-3 days/week)"},
   {value: 1.55, text: "Moderately active (moderate exercise 3-5 days/week)"},
-  {value: 1.725, text "Very active (hard exercise 6-7 days/week)"},
-  {value: 1.9, text "Extremely active (hard daily exercise and physical job)"}
+  {value: 1.725, text: "Very active (hard exercise 6-7 days/week)"},
+  {value: 1.9, text: "Extremely active (hard daily exercise and physical job)"}
 ];
 
 function acceptDisclaimer() {
@@ -54,7 +54,7 @@ function showTerms() {
 }
 
 function showPrivacy() {
-  document.getElementById('privacyModal').style.display = 'block':
+  document.getElementById('privacyModal').style.display = 'block';
 }
 
 function closeModal(modalId) {
@@ -63,13 +63,14 @@ function closeModal(modalId) {
 
 function showSettings() {
   document.getElementById('settingsModal').style.display = 'block';
+}
 
 function updateActivityText(value) {
   const index = parseInt(value);
   if (index > 0) {
     document.getElementById('activityText').innerText = activityLevels[index - 1].text;
   } else {
-    document.getElementById('activityText'),innerText = 'Select activity level';
+    document.getElementById('activityText').innerText = 'Select activity level';
   }
 }
 
@@ -99,38 +100,39 @@ function toggleUnits() {
 function calculate() {
   const gender = document.getElementById('gender').value;
   const age = parseFloat(document.getElementById('age').value);
-  const units = document.getElementId('units').value || 'imperial';
+  const units = document.getElementById('units').value || 'imperial';
   let height, weight;
   if (units === 'metric') {
-    height = parseFloat(documnet.getElementId('height').value);
-    weight = parseFloat(documnet.getElementId('weight').value);
+    height = parseFloat(document.getElementById('height').value);
+    weight = parseFloat(document.getElementById('weight').value);
   } else {
     const ft = parseFloat(document.getElementById('ft').value) || 0;
     const inc = parseFloat(document.getElementById('in').value) || 0;
     height = (ft * 12 + inc) * 2.54;
     weight = parseFloat(document.getElementById('lb').value) / 2.20462;
   }
-  const activityIndex = parseInt(documet.getElementById('activity').value);
+  const activityIndex = parseInt(document.getElementById('activity').value);
   const activity = activityLevels[activityIndex - 1].value;
   const goal = document.getElementById('goal').value;
 
   //Validate inputs
   if (!gender || isNaN(age) || age < 18 || age > 78 || isNaN(height) || isNaN(weight) || weight <= 0 || activityIndex === 0 || !goal) {
-    alert('Please fill in all required fields correctly. Age must be 18-78, weight/height must be positive and in rage');
+    alert('Please fill in all required fields correctly. Age must be 18-78, weight/height must be positive and in range');
     return;
   }
   if (units === 'metric' && (height < 90 || height > 250)) {
     alert('Height must be between 90 and 250 cm.');
     return;
-  } else if (units !== 'metric' && (parseFloat(document.getElementById('ft').value) < 3 || parseFloat(document.getElementById('ft').value) > 8)){
-    alert('Height must be between 3 and 8 ft.');
+  } else if (units !== 'metric' && (parseFloat(document.getElementById('ft').value) < 3 || parseFloat(document.getElementById('ft').value) > 8) || 
+            parseFloat(document.getElementById('in').value) > 11))) {
+    alert('Height must be between 3 and 8 ft, 0-11 in.');
     return;
   }
   if (units === 'metric' && (weight < 20 || weight > 250)) {
     alert('Weight must be between 20 and 250 kg.');
     return;
   } else if (units !== 'metric' && (parseFloat(document.getElementById('lb').value) < 50 || parseFloat(document.getElementById('lb').value) > 500)){
-    alert('Height must be between 50 and 500 lb.');
+    alert('Weight must be between 50 and 500 lb.');
     return;
   }
 
@@ -186,7 +188,7 @@ function generateMealPlan() {
       <p>Breakfast: ${bMeal.name} (${bScale.toFixed(1)} portions) - ${bCal} cal, ${Math.round(bMeal.p * bScale)}g protein, 
       ${Math.round(bMeal.c * bScale)}g carbs, ${Math.round(bMeal.f * bScale)}g fat</p>
 
-      <p>Lunch: ${lMeal.name} (${lScale.toFixed(1)} portions) - ${lCal} cal, ${Math.round(bMeal.l * lScale)}g protein, 
+      <p>Lunch: ${lMeal.name} (${lScale.toFixed(1)} portions) - ${lCal} cal, ${Math.round(bMeal.p * lScale)}g protein, 
       ${Math.round(lMeal.c * lScale)}g carbs, ${Math.round(lMeal.f * lScale)}g fat</p>
 
       <p>Dinner: ${dMeal.name} (${dScale.toFixed(1)} portions) - ${dCal} cal, ${Math.round(dMeal.p * dScale)}g protein, 
@@ -207,10 +209,10 @@ function regenerateMeal() {
 }
 
 function clearAll() {
-  document.getElementById('NutriTarget').reset();
+  document.getElementById('calcForm').reset();
   document.getElementById('output').style.display = 'none';
   updateActivityText(0);
-  ToggleUnits();
+  toggleUnits();
 }
 
 //Initial setup
