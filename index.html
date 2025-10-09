@@ -7,31 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="disclaimerModal" style="display: block; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: 
-  rgba(0,0,0,0.4);">
-    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px;">
+  <div id="disclaimerModal" class="modal" style="display: block;">
+    <div class="modal-content">
       <h2>Disclaimer</h2>
       <p>This application does not provide professional medical advice. The calorie calculations and meal plans are for informational purposes only. 
       Consult a healthcare professional before making dietary changes.</p>
-      <p>By using this application, you agree to out <a href="#terms" onclick="showTerms()">Terms of Service</a> and <a href="#privacy" 
-      onclick="showPrivacy()">Privacy Policy</a>.</p>
+      <p>By using this application, you agree to our <a href="#" onclick="showTerms(); return false;">Terms of Service</a> and <a href="#" 
+      onclick="showPrivacy(); return false;">Privacy Policy</a>.</p>
       <label><input type="checkbox" id="acknowledge"> I acknowledge and agree</label><br><br>
       <button onclick="acceptDisclaimer()">Accept</button>
     </div>
   </div>
 
-  <div id="termsModal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: 
-  rgba(0,0,0,0.4);">
-    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px;">
+  <div id="termsModal" class="modal">
+    <div class="modal=content">
       <h2>Terms of Service</h2>
       <p>[Placeholder for Terms of Service]</p>
       <button onclick="closeModal('termsModal')">Close</button>
     </div>
   </div>
 
-  <div id="privacyModal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: 
-  rgba(0,0,0,0.4);">
-    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px;">
+  <div id="privacyModal" class="modal">
+    <div class="modal-content">
       <h2>Privacy Policy</h2>
       <p>[Placeholder for Privacy Policy. Note: No personal data stored since this is a static site]</p>
       <button onclick="closeModal('privacyModal')">Close</button>
@@ -40,10 +37,9 @@
 
   <div id="mainContent" style="display: none;">
     <h1>NutriTarget</h1>
-    <button onclick="showSettings()">Settings</button>
-    <div id="settingsModal" style ="display:none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: 
-    rgba(0,0,0,0.4);">
-      <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px;">
+    <button id="settingsButton" onclick="showSettings()">Settings</button>
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
         <h2>Settings</h2>
         <label for="units">Units:</label>
         <select id="units" onchange="toggleUnits()">
