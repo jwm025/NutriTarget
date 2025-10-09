@@ -23,7 +23,7 @@ const dinners = [
 ];
 
 const snacks = [
-  {name: "Apple with Nut Butter", cal:190, c:25, f:10},
+  {name: "Apple with Nut Butter", cal:190, p:4, c:25, f:10},
   {name: "Greek Yogurt with Berries", cal:150, p:15, c:15, f:3},
   {name: "Protein Bar", cal:200, p:20, c:20, f:5},
   {name: "Veggies with Hummus", cal:150, p:5, c:20, f:8},
@@ -123,10 +123,13 @@ function calculate() {
   if (units === 'metric' && (height < 90 || height > 250)) {
     alert('Height must be between 90 and 250 cm.');
     return;
-  } else if (units !== 'metric' && (parseFloat(document.getElementById('ft').value) < 3 || parseFloat(document.getElementById('ft').value) > 8) || 
-            parseFloat(document.getElementById('in').value) > 11))) {
-    alert('Height must be between 3 and 8 ft, 0-11 in.');
-    return;
+  } else if (units !== 'metric') {
+    const ft = parseFloat(document.getElementById('ft').value) || 0;
+    const inc = parseFloat(document.getElementById('in').value) || 0;
+    if (ft < 3 || ft > 8 || inc < 0 || inc > 11) {
+      alert('Height must be between 3 and 8 ft, 0-11 in.');
+      return;
+    }
   }
   if (units === 'metric' && (weight < 20 || weight > 250)) {
     alert('Weight must be between 20 and 250 kg.');
@@ -184,19 +187,16 @@ function generateMealPlan() {
   const totalC = Math.round(bMeal.c * bScale + lMeal.c * lScale + dMeal.c * dScale + sMeal.c * sScale);
   const totalF = Math.round(bMeal.f * bScale + lMeal.f * lScale + dMeal.f * dScale + sMeal.f * sScale);
 
-  let planHTML = '
-      <p>Breakfast: ${bMeal.name} (${bScale.toFixed(1)} portions) - ${bCal} cal, ${Math.round(bMeal.p * bScale)}g protein, 
-      ${Math.round(bMeal.c * bScale)}g carbs, ${Math.round(bMeal.f * bScale)}g fat</p>
-
-      <p>Lunch: ${lMeal.name} (${lScale.toFixed(1)} portions) - ${lCal} cal, ${Math.round(bMeal.p * lScale)}g protein, 
-      ${Math.round(lMeal.c * lScale)}g carbs, ${Math.round(lMeal.f * lScale)}g fat</p>
-
-      <p>Dinner: ${dMeal.name} (${dScale.toFixed(1)} portions) - ${dCal} cal, ${Math.round(dMeal.p * dScale)}g protein, 
-      ${Math.round(dMeal.c * dScale)}g carbs, ${Math.round(dMeal.f * dScale)}g fat</p>
-
-      <p>Snack: ${sMeal.name} (${sScale.toFixed(1)} portions) - ${sCal} cal, ${Math.round(sMeal.p * sScale)}g protein, 
-      ${Math.round(sMeal.c * sScale)}g carbs, ${Math.round(sMeal.f * sScale)}g fat</p>
-  ';
+  let planHTML = `
+    <p>Breakfast: ${bMeal.name} (${bScale.toFixed(1)} portions) - ${bCal} cal, ${Math.round(bMeal.p * bScale)}g protein, 
+    ${Math.round(bMeal.c * bScale)}g carbs, ${Math.round(bMeal.f * bScale)}g fat</p>
+    <p>Lunch: ${lMeal.name} (${lScale.toFixed(1)} portions) - ${lCal} cal, ${Math.round(lMeal.p * lScale)}g protein, 
+    ${Math.round(lMeal.c * lScale)}g carbs, ${Math.round(lMeal.f * lScale)}g fat</p>
+    <p>Dinner: ${dMeal.name} (${dScale.toFixed(1)} portions) - ${dCal} cal, ${Math.round(dMeal.p * dScale)}g protein, 
+    ${Math.round(dMeal.c * dScale)}g carbs, ${Math.round(dMeal.f * dScale)}g fat</p>
+    <p>Snack: ${sMeal.name} (${sScale.toFixed(1)} portions) - ${sCal} cal, ${Math.round(sMeal.p * sScale)}g protein, 
+    ${Math.round(sMeal.c * sScale)}g carbs, ${Math.round(sMeal.f * sScale)}g fat</p>
+  `;
   document.getElementById('mealPlan').innerHTML = planHTML;
   document.getElementById('totalMealCal').innerText = totalMealCal;
   document.getElementById('totalMealP').innerText = totalP;
