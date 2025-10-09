@@ -41,66 +41,78 @@ const activityLevels = [
 ];
 
 function acceptDisclaimer() {
-  if (document.getElementByID('acknowledge').checked) {
-    document.getElementByID('disclaimerModal').style.display = 'none';
-    document.getElementByID('mainContent').style.display = 'block';
+  if (document.getElementById('acknowledge').checked) {
+    document.getElementById('disclaimerModal').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
   } else {
       alert('Please acknowledge the terms.');
   }
 }
 
 function showTerms() {
-  document.getElementByID('termsModal').style.display = 'block';
+  document.getElementById('termsModal').style.display = 'block';
 }
 
 function showPrivacy() {
-  document.getElementByID('privacyModal').style.display = 'block':
+  document.getElementById('privacyModal').style.display = 'block':
 }
 
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+function showSettings() {
+  document.getElementById('settingsModal').style.display = 'block';
+
 function updateActivityText(value) {
-  document.GetElementByID('activityText').innerText = activityLevels[value].text;
+  const index = parseInt(value);
+  if (index > 0) {
+    document.getElementById('activityText').innerText = activityLevels[index - 1].text;
+  } else {
+    document.getElementById('activityText'),innerText = 'Select activity level';
+  }
 }
 
 function toggleUnits() {
-  const units = document.getElementByID('units').value;
+  const units = document.getElementById('units').value;
   if (units === 'metric') {
-    document.getElementByID('heightImperial').style.display = 'none';
-    document.getElementByID('heightMetric').style.display = 'block';
-    document.getElementByID('weightImperial').style.display = 'none';
-    document.getElementByID('weightMetric').style.display = 'block';
-    document.getElementByID('height').required = true;
-    document.getElementByID('weight').required = true;
-    document.getElementByID('ft').required = false;
-    document.getElementByID('lb').required = false;
+    document.getElementById('heightImperial').style.display = 'none';
+    document.getElementById('heightMetric').style.display = 'block';
+    document.getElementById('weightImperial').style.display = 'none';
+    document.getElementById('weightMetric').style.display = 'block';
+    document.getElementById('height').required = true;
+    document.getElementById('weight').required = true;
+    document.getElementById('ft').required = false;
+    document.getElementById('lb').required = false;
   } else {
-    document.getElementByID('heightImperial').style.display = 'block';
-    document.getElementByID('heightMetric').style.display = 'none';
-    document.getElementByID('weightImperial').style.display = 'block';
-    document.getElementByID('weightMetric').style.display = 'none';
-    document.getElementByID('height').required = false;
-    document.getElementByID('weight').required = false;
-    document.getElementByID('ft').required = true;
-    document.getElementByID('lb').required = true;
+    document.getElementById('heightImperial').style.display = 'block';
+    document.getElementById('heightMetric').style.display = 'none';
+    document.getElementById('weightImperial').style.display = 'block';
+    document.getElementById('weightMetric').style.display = 'none';
+    document.getElementById('height').required = false;
+    document.getElementById('weight').required = false;
+    document.getElementById('ft').required = true;
+    document.getElementById('lb').required = true;
   }
 }
 
 function calculate() {
-  const gender = document.getElementByID('gender').value;
-  const age = parseFloat(document.getElementByID('age').value);
-  const units = document.getElementID('units').value || 'imperial';
+  const gender = document.getElementById('gender').value;
+  const age = parseFloat(document.getElementById('age').value);
+  const units = document.getElementId('units').value || 'imperial';
   let height, weight;
   if (units === 'metric') {
-    height = parseFloat(documnet.getElementID('height').value);
-    weight = parseFloat(documnet.getElementID('weight').value);
+    height = parseFloat(documnet.getElementId('height').value);
+    weight = parseFloat(documnet.getElementId('weight').value);
   } else {
-    const ft = parseFloat(document.getElementByID('ft').value) || 0;
-    const inc = parseFloat(document.getElementByID('in').value) || 0;
+    const ft = parseFloat(document.getElementById('ft').value) || 0;
+    const inc = parseFloat(document.getElementById('in').value) || 0;
     height = (ft * 12 + inc) * 2.54;
-    weight = parseFloat(document.getElementByID('lb').value) / 2.20462;
+    weight = parseFloat(document.getElementById('lb').value) / 2.20462;
   }
-  const activityIndex = parseInt(documet.getElementByID('activity').value);
-  const activity = activityLevels[activityIndex].value;
-  const goal = document.getElementByID('goal').value;
+  const activityIndex = parseInt(documet.getElementById('activity').value);
+  const activity = activityLevels[activityIndex - 1].value;
+  const goal = document.getElementById('goal').value;
 
   //Validate inputs
   if (!gender || isNaN(age) || age < 18 || age > 78 || isNaN(height) || isNaN(weight) || weight <= 0 || activityIndex === 0 || !goal) {
@@ -110,14 +122,14 @@ function calculate() {
   if (units === 'metric' && (height < 90 || height > 250)) {
     alert('Height must be between 90 and 250 cm.');
     return;
-  } else if (units !== 'metric' && (parseFloat(document.getElementByID('ft').value) < 3 || parseFloat(document.getElementByID('ft').value) > 8)){
+  } else if (units !== 'metric' && (parseFloat(document.getElementById('ft').value) < 3 || parseFloat(document.getElementById('ft').value) > 8)){
     alert('Height must be between 3 and 8 ft.');
     return;
   }
   if (units === 'metric' && (weight < 20 || weight > 250)) {
     alert('Weight must be between 20 and 250 kg.');
     return;
-  } else if (units !== 'metric' && (parseFloat(document.getElementByID('lb').value) < 50 || parseFloat(document.getElementByID('lb').value) > 500)){
+  } else if (units !== 'metric' && (parseFloat(document.getElementById('lb').value) < 50 || parseFloat(document.getElementById('lb').value) > 500)){
     alert('Height must be between 50 and 500 lb.');
     return;
   }
@@ -140,12 +152,12 @@ function calculate() {
   const carbs = Math.round((currentCal * 0.4) / 4);
   const fat = Math.round((currentCal * 0.3) / 9);
 
-  document.getElementByID('calories').innerText = currentCal;
-  document.getElementByID('protein').innerText = protein;
-  document.getElementByID('carbs').innerText = carbs;
-  document.getElementByID('fat').innerText = fat;
+  document.getElementById('calories').innerText = currentCal;
+  document.getElementById('protein').innerText = protein;
+  document.getElementById('carbs').innerText = carbs;
+  document.getElementById('fat').innerText = fat;
   generateMealPlan();
-  document.getElementByID('output').style.display = 'block';
+  document.getElementById('output').style.display = 'block';
 }
 
 function generateMealPlan() {
@@ -183,11 +195,11 @@ function generateMealPlan() {
       <p>Snack: ${sMeal.name} (${sScale.toFixed(1)} portions) - ${sCal} cal, ${Math.round(sMeal.p * sScale)}g protein, 
       ${Math.round(sMeal.c * sScale)}g carbs, ${Math.round(sMeal.f * sScale)}g fat</p>
   ';
-  document.getElementByID('mealPlan').innerHTML = planHTML;
-  document.getElementByID('totalMealCal').innerText = totalMealCal;
-  document.getElementByID('totalMealP').innerText = totalP;
-  document.getElementByID('totalMealC').innerText = totalC;
-  document.getElementByID('totalMealF').innerText = totalF;
+  document.getElementById('mealPlan').innerHTML = planHTML;
+  document.getElementById('totalMealCal').innerText = totalMealCal;
+  document.getElementById('totalMealP').innerText = totalP;
+  document.getElementById('totalMealC').innerText = totalC;
+  document.getElementById('totalMealF').innerText = totalF;
 }
 
 function regenerateMeal() {
@@ -195,12 +207,14 @@ function regenerateMeal() {
 }
 
 function clearAll() {
-  document.getElementByID('NutriTarget').reset();
-  document.getElementByID('output').style.display = 'none';
+  document.getElementById('NutriTarget').reset();
+  document.getElementById('output').style.display = 'none';
   updateActivityText(0);
   ToggleUnits();
 }
 
 //Initial setup
-toggleUnits();
-updateActivityText(0);
+document.addEventListener('DOMContentLoaded', function() {
+  toggleUnits();
+  updateActivityText(0);
+});
