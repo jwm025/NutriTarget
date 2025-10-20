@@ -1,0 +1,96 @@
+.nutri-target-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* FORM */
+#calc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* GENDER */
+.gender-container,
+.age-container,
+.activity-container,
+.goal-container {
+  display: flex;
+  flex-direction: column;
+  padding: 13px;
+  border-radius: 10px;
+}
+
+.gender-container.error,
+.age-container.error,
+.activity-container.error,
+.goal-container.error {
+  background-color: #e53935;
+}
+
+.gender-label-select,
+.age-label-select,
+.activity-label-input,
+.goal-label-select {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#gender,
+#age,
+#goal-select {
+  box-sizing: border-box;
+  height: 21px;
+  width: 208px;
+  padding-left: 5px;
+}
+
+#gender.error,
+#age.error,
+#activity.error,
+#goal-select.error {
+  border: 1px dashed black;
+}
+
+/* HEIGHT */
+.height-error-metric {
+  display: none;
+}
+
+/* WEIGHT */
+.weight-error-metric {
+  display: none;
+}
+
+/* ACTIVITY */
+#activity {
+  box-sizing: border-box;
+  height: 21px;
+  width: 208px;
+}
+
+/* GOAL */
+#goal-select {
+  height: 21px;
+  width: 208px;
+}
+
+/* ERROR */
+.select-error,
+.age-error,
+.height-error-imperial,
+.height-error-metric,
+.weight-error-imperial,
+.weight-error-metric,
+.activity-error,
+.goal-error {
+  height: 10px;
+  padding-left: 10px;
+}
+
+/* LABEL */
+label.error {
+  font-weight: bold;
+}

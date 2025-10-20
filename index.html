@@ -1,112 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriTarget</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="disclaimerModal" class="modal" style="display: block;">
-    <div class="modal-content">
-      <h2>Disclaimer</h2>
-      <p>This application does not provide professional medical advice. The calorie calculations and meal plans are for informational purposes only. 
-      Consult a healthcare professional before making dietary changes.</p>
-      <p>By using this application, you agree to our <a href="#" onclick="showTerms(); return false;">Terms of Service</a> and <a href="#" 
-      onclick="showPrivacy(); return false;">Privacy Policy</a>.</p>
-      <label><input type="checkbox" id="acknowledge"> I acknowledge and agree</label><br><br>
-      <button onclick="acceptDisclaimer()">Accept</button>
-    </div>
-  </div>
-
-  <div id="termsModal" class="modal">
-    <div class="modal-content">
-      <h2>Terms of Service</h2>
-      <p>[Placeholder for Terms of Service]</p>
-      <button onclick="closeModal('termsModal')">Close</button>
-    </div>
-  </div>
-
-  <div id="privacyModal" class="modal">
-    <div class="modal-content">
-      <h2>Privacy Policy</h2>
-      <p>[Placeholder for Privacy Policy. Note: No personal data stored since this is a static site]</p>
-      <button onclick="closeModal('privacyModal')">Close</button>
-    </div>
-  </div>
-
-  <div id="mainContent" style="display: none;">
-    <h1>NutriTarget</h1>
-    <button id="settingsButton" onclick="showSettings()">Settings</button>
-    <div id="settingsModal" class="modal">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriTarget</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="extra.css" />
+  </head>
+  <body>
+    <div id="disclaimerModal" class="modal" style="display: block">
       <div class="modal-content">
-        <h2>Settings</h2>
-        <label for="units">Units:</label>
-        <select id="units" onchange="toggleUnits()">
-          <option value="imperial">Imperial (ft/in, lb)</option>
-          <option value="metric">Metric (cm, kg)</option>
-        </select><br><br>
-        <button onclick="closeModal('settingsModal')">Close</button>
+        <h2>Disclaimer</h2>
+        <p>
+          This application does not provide professional medical advice. The
+          calorie calculations and meal plans are for informational purposes
+          only. Consult a healthcare professional before making dietary changes.
+        </p>
+        <p>
+          By using this application, you agree to our
+          <a href="#" onclick="showTerms(); return false;">Terms of Service</a>
+          and
+          <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>.
+        </p>
+        <label
+          ><input type="checkbox" id="acknowledge" checked /> I acknowledge and
+          agree</label
+        ><br /><br />
+        <button onclick="acceptDisclaimer()">Accept</button>
       </div>
     </div>
 
-    <form id="calcForm">
-      <label for="gender">Gender:</label>
-      <select id="gender" required>
-        <option value="">Select</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select><br><br>
-      <label for="age">Age (years):</label>
-      <input type="number" id="age" required min="18" max="78" step="1"><br><br>
-      <div id="heightImperial">
-        <label for="ft">Height (ft):</label>
-        <input type="number" id="ft" required min="3" max="8" step="any">
-        <label for="in"> (in):</label>
-        <input type="number" id="in" required min="0" max="11" step="any"><br><br>
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <h2>Terms of Service</h2>
+        <p>[Placeholder for Terms of Service]</p>
+        <button onclick="closeModal('termsModal')">Close</button>
       </div>
-      <div id="heightMetric" style="display:none;">
-        <label for="height">Height (cm):</label>
-        <input type="number" id="height" required min="90" max="250" step="any"><br><br>
-      </div>
-      <div id="weightImperial">
-        <label for="lb">Weight (lb):</label>
-        <input type="number" id="lb" required min="50" max="500" step="any"><br><br>
-      </div>
-      <div id="weightMetric" style="display: none;">
-        <label for="weight">Weight (kg):</label>
-        <input type="number" id="weight" required min="20" max="250" step="any"><br><br>
-      </div>
-      <label for="activity">Activity Level:</label>
-      <input type="range" id="activity" min="0" max="4" step="1" value="0" oninput="updateActivityText(this.value)"><br>
-      <span id="activityText">Select activity level</span><br><br>
-      <label for="goal">Weight Goal:</label>
-      <select id="goal" required>
-        <option value="">Select</option>
-        <option value="lose">Lose weight</option>
-        <option value="maintain">Maintain weight</option>
-        <option value="gain">Gain weight</option>
-      </select><br><br>
-      <button type="button" onclick="calculate()">Calculate</button>
-    </form>
-    <div id="output" style="display: none;">
-      <h2>Results</h2>
-      <p>Daily Recommended Calories: <span id="calories"></span></p>
-      <p>Macronutrient Ratio (example: 30% protein, 40% carbs, 30% fat):</p>
-      <ul>
-        <li>Protein: <span id="protein"></span>g</li>
-        <li>Carbs: <span id="carbs"></span>g</li>
-        <li>Fat: <span id="fat"></span>g</li>
-      </ul>
-      <h3>Example Meal Plan</h3>
-      <div id="mealPlan"></div>
-      <p>Total Meal Plan Calories: <span id="totalMealCal"></span> (matches target)</p>
-      <p>Total Meal Plan Macros: Protein <span id="totalMealP"></span>g, Carbs <span id="totalMealC"></span>g, Fat <span id="totalMealF"></span>g 
-      (approximates target)</p>
-      <button type="button" onclick="regenerateMeal()">Regenerate Meal Plan</button>
-      <button type="button" onclick="clearAll()">Clear All</button>
     </div>
-  </div>
-  <script src="script.js"></script>
-</body>
+
+    <div id="privacyModal" class="modal">
+      <div class="modal-content">
+        <h2>Privacy Policy</h2>
+        <p>
+          [Placeholder for Privacy Policy. Note: No personal data stored since
+          this is a static site]
+        </p>
+        <button onclick="closeModal('privacyModal')">Close</button>
+      </div>
+    </div>
+
+    <div id="mainContent" style="display: none">
+      <div class="nutri-target-header">
+        <h1>NutriTarget</h1>
+        <button id="settingsButton" onclick="showSettings()">Settings</button>
+      </div>
+      <div id="settingsModal" class="modal">
+        <div class="modal-content">
+          <h2>Settings</h2>
+          <label for="units">Units:</label>
+          <select id="units" onchange="toggleUnits()">
+            <option value="imperial">Imperial (ft/in, lb)</option>
+            <option value="metric">Metric (cm, kg)</option></select
+          ><br /><br />
+          <button onclick="closeModal('settingsModal')">Close</button>
+        </div>
+      </div>
+
+      <form id="calc-form">
+        <!-- GENDER -->
+        <div class="gender-container">
+          <div class="gender-label-select">
+            <label id="gender-label" for="gender">Gender:</label>
+            <select id="gender">
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="select-error"></div>
+        </div>
+
+        <!-- AGE -->
+        <div class="age-container">
+          <div class="age-label-select">
+            <label id="age-label" for="age">Age (years):</label>
+            <input type="number" id="age" min="18" max="78" step="1" />
+          </div>
+          <div class="age-error"></div>
+        </div>
+
+        <!-- HEIGHT -->
+        <div id="heightImperial">
+          <label for="ft">Height (ft):</label>
+          <input type="number" id="ft" min="3" max="8" step="any" />
+          <label for="in"> (in):</label>
+          <input type="number" id="in" min="0" max="11" step="any" />
+        </div>
+        <div class="height-error-imperial"></div>
+
+        <div id="heightMetric" style="display: none">
+          <label for="height">Height (cm):</label>
+          <input type="number" id="height" min="90" max="250" step="any" />
+        </div>
+        <div class="height-error-metric"></div>
+
+        <!-- WEIGHT -->
+        <div id="weightImperial">
+          <label for="lb">Weight (lb):</label>
+          <input type="number" id="lb" min="50" max="500" step="any" />
+        </div>
+        <div class="weight-error-imperial"></div>
+
+        <div id="weightMetric" style="display: none">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" id="weight" min="20" max="250" step="any" />
+        </div>
+        <div class="weight-error-metric"></div>
+
+        <!-- ACTIVITY -->
+        <div class="activity-container">
+          <div class="activity-label-input">
+            <label id="activity-label" for="activity">Activity Level:</label>
+            <input
+              type="range"
+              id="activity"
+              min="0"
+              max="4"
+              step="1"
+              value="0"
+            />
+          </div>
+          <div class="activity-error"></div>
+        </div>
+
+        <!-- GOAL -->
+        <div class="goal-container">
+          <div class="goal-label-select">
+            <label id="goal-container" for="goal">Weight Goal:</label>
+            <select id="goal-select">
+              <option value="">Select</option>
+              <option value="lose">Lose weight</option>
+              <option value="maintain">Maintain weight</option>
+              <option value="gain">Gain weight</option>
+            </select>
+          </div>
+          <div class="goal-error"></div>
+        </div>
+
+        <button type="submit">Calculate</button>
+      </form>
+
+      <div id="output" style="display: none">
+        <h2>Results</h2>
+        <p>Daily Recommended Calories: <span id="calories"></span></p>
+        <p>Macronutrient Ratio (example: 30% protein, 40% carbs, 30% fat):</p>
+        <ul>
+          <li>Protein: <span id="protein"></span>g</li>
+          <li>Carbs: <span id="carbs"></span>g</li>
+          <li>Fat: <span id="fat"></span>g</li>
+        </ul>
+        <h3>Example Meal Plan</h3>
+        <div id="mealPlan"></div>
+        <p>
+          Total Meal Plan Calories: <span id="totalMealCal"></span> (matches
+          target)
+        </p>
+        <p>
+          Total Meal Plan Macros: Protein <span id="totalMealP"></span>g, Carbs
+          <span id="totalMealC"></span>g, Fat <span id="totalMealF"></span>g
+          (approximates target)
+        </p>
+        <button type="button" onclick="regenerateMeal()">
+          Regenerate Meal Plan
+        </button>
+        <button type="button" onclick="clearAll()">Clear All</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="extra.js"></script>
+  </body>
 </html>
