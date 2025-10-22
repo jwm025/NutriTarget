@@ -23,11 +23,11 @@ const dinners = [
 ];
 
 const snacks = [
-  {name: "Apple with Nut Butter", cal:190, p:4, c:25, f:10},
-  {name: "Greek Yogurt with Berries", cal:150, p:15, c:15, f:3},
-  {name: "Protein Bar", cal:200, p:20, c:20, f:5},
-  {name: "Veggies with Hummus", cal:150, p:5, c:20, f:8},
-  {name: "Cottage Cheese", cal:100, p:12, c:5, f:4}
+  {name: "Apple with Nut Butter", cal:190, p:4, c:24, f:7},
+  {name: "Greek Yogurt with Berries", cal:150, p:10, c:13, f:6},
+  {name: "Protein Bar", cal:150, p:21, c:5, f:7},
+  {name: "Veggies with Hummus", cal:182, p:10, c:14, f:10},
+  {name: "Cottage Cheese", cal:90, p:13, c:5, f:2.5}
 ];
 
 let currentCal = 0;
