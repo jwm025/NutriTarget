@@ -18,7 +18,7 @@ const dinners = [
   {name: "Air Fryer Chicken Parm", cal:385, p:32, c:28, f:18},
   {name: "Green Chili Chicken Bake", cal:240, p:40, c:14, f:5},
   {name: "Low Carb Hamburger Helper", cal:390, p:40, c:11, f:20},
-  {name: "Garlic Butter Steak & Potatoes Skillet", cal:493, p:27, c:40, f:9},
+  {name: "Garlic Butter Steak & Potatoes Skillet", cal:493, p:27, c:40, f:25},
   {name: "Chicken Noodle Soup", cal:313, p:34, c:24, f:5}
 ];
 
