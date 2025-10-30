@@ -15,7 +15,8 @@
 .gender-container,
 .age-container,
 .activity-container,
-.goal-container {
+.goal-container,
+.height-imperial-container {
   display: flex;
   flex-direction: column;
   padding: 13px;
@@ -25,14 +26,16 @@
 .gender-container.error,
 .age-container.error,
 .activity-container.error,
-.goal-container.error {
+.goal-container.error,
+.height-error-imperial.error {
   background-color: #e53935;
 }
 
 .gender-label-select,
 .age-label-select,
 .activity-label-input,
-.goal-label-select {
+.goal-label-select,
+#heightImperial {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
@@ -40,7 +43,9 @@
 
 #gender,
 #age,
-#goal-select {
+#goal-select,
+#ft,
+#in {
   box-sizing: border-box;
   height: 21px;
   width: 208px;
@@ -50,13 +55,19 @@
 #gender.error,
 #age.error,
 #activity.error,
-#goal-select.error {
+#goal-select.error,
+#ft.error, #in.error {
   border: 1px dashed black;
 }
 
 /* HEIGHT */
 .height-error-metric {
   display: none;
+}
+
+#heightImperial {
+  display: flex;
+  flex-direction: row;
 }
 
 /* WEIGHT */

@@ -90,19 +90,23 @@
         </div>
 
         <!-- HEIGHT -->
-        <div id="heightImperial">
+         <div class="height-imperial-container">
+          <div id="heightImperial">
           <label for="ft">Height (ft):</label>
           <input type="number" id="ft" min="3" max="8" step="any" />
           <label for="in"> (in):</label>
           <input type="number" id="in" min="0" max="11" step="any" />
         </div>
         <div class="height-error-imperial"></div>
+         </div>
 
+         <div class="height-metric-container">
         <div id="heightMetric" style="display: none">
           <label for="height">Height (cm):</label>
           <input type="number" id="height" min="90" max="250" step="any" />
         </div>
-        <div class="height-error-metric"></div>
+        <div class="height-error-metric"></div>          
+         </div>
 
         <!-- WEIGHT -->
         <div id="weightImperial">

@@ -62,7 +62,7 @@ function ageValidation() {
     if (checkAgeError()) {
       ageError.textContent = "The range is 18 to 78!";
     } else {
-      ageError.textContent = "Missing age!";
+      ageError.textContent = "Missing age.";
     }
     ageContainer.classList.add("error");
     ageInput.classList.add("error");
