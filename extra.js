@@ -8,6 +8,31 @@ const ageError = document.querySelector(".age-error");
 const ageContainer = document.querySelector(".age-container");
 const ageLabel = document.querySelector("#age-label");
 
+// IMPERIAL
+const feetInput = document.querySelector("#ft");
+const inchInput = document.querySelector("#in");
+const feetLabel = document.querySelector("#feet-label");
+const inchLabel = document.querySelector("#in-label");
+const heightErrorImperial = document.querySelector(".height-error-imperial");
+const heightImperialContainer = document.querySelector(
+  ".height-imperial-container"
+);
+
+const weightImperialContainer = document.querySelector(
+  ".weight-imperial-container"
+);
+const lbLabel = document.querySelector("#lb-label");
+const lbInput = document.querySelector("#lb");
+const weightErrorImperial = document.querySelector(".weight-error-imperial");
+
+// METRIC
+const cmInput = document.querySelector("#height");
+const cmLabel = document.querySelector("#height-label");
+const heightMetricContainer = document.querySelector(
+  ".height-metric-container"
+);
+const heightErrorMetric = document.querySelector(".height-error-metric");
+
 const activityInput = document.querySelector("#activity");
 const activityError = document.querySelector(".activity-error");
 const activityContainer = document.querySelector(".activity-container");
@@ -26,6 +51,18 @@ genderSelect.addEventListener("change", () => {
 
 ageInput.addEventListener("input", () => {
   ageValidation();
+});
+
+feetInput.addEventListener("input", () => {
+  heightImperialValidation();
+});
+
+inchInput.addEventListener("input", () => {
+  heightImperialValidation();
+});
+
+lbInput.addEventListener("input", () => {
+  weightImperialValidation();
 });
 
 activityInput.addEventListener("change", () => {
@@ -53,7 +90,6 @@ function genderValidation() {
 }
 
 function ageValidation() {
-  console.log(ageInput.validity.valueMissing);
   if (
     ageInput.validity.rangeOverflow ||
     ageInput.validity.rangeUnderflow ||
@@ -69,11 +105,87 @@ function ageValidation() {
     ageLabel.classList.add("error");
     return true;
   } else {
-    console.log("here");
     ageError.textContent = "";
     ageContainer.classList.remove("error");
     ageInput.classList.remove("error");
     ageLabel.classList.remove("error");
+    return false;
+  }
+}
+
+function heightImperialValidation() {
+  if (
+    feetInput.value === "" ||
+    inchInput.value === null ||
+    feetInput.validity.rangeOverflow ||
+    inchInput.validity.rangeOverflow ||
+    feetInput.validity.rangeUnderflow ||
+    inchInput.validity.rangeUnderflow
+  ) {
+    if (checkHeightImperialError()) {
+      heightErrorImperial.textContent =
+        "Height range (ft): 3-8, Inch range: 0-11.";
+    } else {
+      heightErrorImperial.textContent = "Missing height.";
+    }
+    heightImperialContainer.classList.add("error");
+    feetInput.classList.add("error");
+    feetLabel.classList.add("error");
+    inchInput.classList.add("error");
+    inchLabel.classList.add("error");
+    return true;
+  } else {
+    heightErrorImperial.textContent = "";
+    heightImperialContainer.classList.remove("error");
+    feetInput.classList.remove("error");
+    feetLabel.classList.remove("error");
+    inchInput.classList.remove("error");
+    inchLabel.classList.remove("error");
+    return false;
+  }
+}
+
+function weightImperialValidation() {
+  if (
+    lbInput.validity.rangeOverflow ||
+    lbInput.validity.rangeUnderflow ||
+    lbInput.value === ""
+  ) {
+    if (checkWeightImperialError()) {
+      weightErrorImperial.textContent = "The range is 18 to 78!";
+    } else {
+      weightErrorImperial.textContent = "Missing age.";
+    }
+    weightImperialContainer.classList.add("error");
+    lbInput.classList.add("error");
+    lbLabel.classList.add("error");
+    return true;
+  } else {
+    console.log("no");
+    weightErrorImperial.textContent = "";
+    weightImperialContainer.classList.remove("error");
+    lbInput.classList.remove("error");
+    lbLabel.classList.remove("error");
+    return false;
+  }
+}
+
+function heightMetricValidation() {
+  if (cmInput.value === "" || cmInput.validity.rangeOverflow) {
+    if (checkHeightMetricError()) {
+      heightErrorMetric.textContent = "Height range (cm): 90-250";
+    } else {
+      heightErrorMetric.textContent = "Missing height.";
+    }
+    heightMetricContainer.classList.add("error");
+    cmInput.classList.add("error");
+    cmLabel.classList.add("error");
+    return true;
+  } else {
+    heightErrorMetric.textContent = "";
+    heightMetricContainer.classList.remove("error");
+    cmInput.classList.remove("error");
+    cmLabel.classList.remove("error");
     return false;
   }
 }
@@ -129,17 +241,56 @@ function checkAgeError() {
   }
 }
 
+function checkHeightImperialError() {
+  if (
+    feetInput.validity.rangeOverflow ||
+    inchInput.validity.rangeOverflow ||
+    feetInput.validity.rangeUnderflow ||
+    inchInput.validity.rangeUnderflow
+  ) {
+    return true;
+  } else if (inchInput.value === "" || feetInput.value === "") {
+    return false;
+  }
+}
+
+function checkWeightImperialError() {
+  if (lbInput.validity.rangeOverflow || lbInput.validity.rangeUnderflow) {
+    return true;
+  } else if (lbInput.value === "") {
+    return false;
+  }
+}
+
+function checkHeightMetricError() {
+  if (cmInput.validity.rangeOverflow || cmInput.validity.rangeOverflow) {
+    return true;
+  } else if (cmInput.value === "" || cmInput.value === "") {
+    return false;
+  }
+}
+
 calcForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
+  // UNIT
+  const units = document.getElementById("units").value;
+
   const genderValid = genderValidation();
   const ageValid = ageValidation();
+  const heightImpValidation = heightImperialValidation();
+  const weightImpValidation = weightImperialValidation();
   const activityValid = activityValidation();
   const goalValid = goalValidation();
 
-  if (!genderValid || !ageValid || !activityValid || !goalValid) {
+  if (
+    !genderValid ||
+    !ageValid ||
+    !heightImpValidation ||
+    !weightImpValidation ||
+    !activityValid ||
+    !goalValid
+  ) {
     // calculate();
   }
 });
-
-// onclick="calculate()";

@@ -66,93 +66,96 @@
         </div>
       </div>
 
-      <form id="calc-form">
-        <!-- GENDER -->
-        <div class="gender-container">
-          <div class="gender-label-select">
-            <label id="gender-label" for="gender">Gender:</label>
-            <select id="gender">
-              <option value="">Select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+      <div class="bottom-half">
+        <form id="calc-form">
+          <!-- AGE -->
+          <div class="age-container">
+            <div class="age-label-select">
+              <label id="age-label" for="age">Age (years):</label>
+              <input type="number" id="age" min="18" max="78" step="1" />
+            </div>
+            <div class="age-error"></div>
           </div>
-          <div class="select-error"></div>
-        </div>
-
-        <!-- AGE -->
-        <div class="age-container">
-          <div class="age-label-select">
-            <label id="age-label" for="age">Age (years):</label>
-            <input type="number" id="age" min="18" max="78" step="1" />
+          <!-- HEIGHT -->
+          <div class="height-imperial-container">
+            <div id="heightImperial">
+              <div class="height-feet">
+                <label id="feet-label" for="ft">Height (ft):</label>
+                <input type="number" id="ft" min="3" max="8" step="any" />
+              </div>
+              <div class="height-inch">
+                <label id="in-label" for="in"> (in):</label>
+                <input type="number" id="in" min="0" max="11" step="any" />
+              </div>
+            </div>
+            <div class="height-error-imperial"></div>
           </div>
-          <div class="age-error"></div>
-        </div>
 
-        <!-- HEIGHT -->
-         <div class="height-imperial-container">
-          <div id="heightImperial">
-          <label for="ft">Height (ft):</label>
-          <input type="number" id="ft" min="3" max="8" step="any" />
-          <label for="in"> (in):</label>
-          <input type="number" id="in" min="0" max="11" step="any" />
-        </div>
-        <div class="height-error-imperial"></div>
-         </div>
-
-         <div class="height-metric-container">
-        <div id="heightMetric" style="display: none">
-          <label for="height">Height (cm):</label>
-          <input type="number" id="height" min="90" max="250" step="any" />
-        </div>
-        <div class="height-error-metric"></div>          
-         </div>
-
-        <!-- WEIGHT -->
-        <div id="weightImperial">
-          <label for="lb">Weight (lb):</label>
-          <input type="number" id="lb" min="50" max="500" step="any" />
-        </div>
-        <div class="weight-error-imperial"></div>
-
-        <div id="weightMetric" style="display: none">
-          <label for="weight">Weight (kg):</label>
-          <input type="number" id="weight" min="20" max="250" step="any" />
-        </div>
-        <div class="weight-error-metric"></div>
-
-        <!-- ACTIVITY -->
-        <div class="activity-container">
-          <div class="activity-label-input">
-            <label id="activity-label" for="activity">Activity Level:</label>
-            <input
-              type="range"
-              id="activity"
-              min="0"
-              max="4"
-              step="1"
-              value="0"
-            />
+          <div class="height-metric-container">
+            <div id="heightMetric" style="display: none">
+              <label id="height-label" for="height">Height (cm):</label>
+              <input type="number" id="height" min="90" max="250" step="any" />
+            </div>
+            <div class="height-error-metric"></div>
           </div>
-          <div class="activity-error"></div>
-        </div>
-
-        <!-- GOAL -->
-        <div class="goal-container">
-          <div class="goal-label-select">
-            <label id="goal-container" for="goal">Weight Goal:</label>
-            <select id="goal-select">
-              <option value="">Select</option>
-              <option value="lose">Lose weight</option>
-              <option value="maintain">Maintain weight</option>
-              <option value="gain">Gain weight</option>
-            </select>
+          <!-- WEIGHT -->
+          <div class="weight-imperial-container">
+            <div id="weightImperial">
+              <label id="lb-label" for="lb">Weight (lb):</label>
+              <input type="number" id="lb" min="50" max="500" step="any" />
+            </div>
+            <div class="weight-error-imperial"></div>
           </div>
-          <div class="goal-error"></div>
-        </div>
-
-        <button type="submit">Calculate</button>
-      </form>
+          <div class="weight-metric-container">
+            <div id="weightMetric" style="display: none">
+              <label for="weight">Weight (kg):</label>
+              <input type="number" id="weight" min="20" max="250" step="any" />
+            </div>
+            <div class="weight-error-metric"></div>
+          </div>
+          <!-- ACTIVITY -->
+          <div class="activity-container">
+            <div class="activity-label-input">
+              <label id="activity-label" for="activity">Activity Level:</label>
+              <input
+                type="range"
+                id="activity"
+                min="0"
+                max="4"
+                step="1"
+                value="0"
+              />
+            </div>
+            <div class="activity-error"></div>
+          </div>
+          <!-- GENDER -->
+          <div class="gender-container">
+            <div class="gender-label-select">
+              <label id="gender-label" for="gender">Gender:</label>
+              <select id="gender">
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="select-error"></div>
+          </div>
+          <!-- GOAL -->
+          <div class="goal-container">
+            <div class="goal-label-select">
+              <label id="goal-container" for="goal">Weight Goal:</label>
+              <select id="goal-select">
+                <option value="">Select</option>
+                <option value="lose">Lose weight</option>
+                <option value="maintain">Maintain weight</option>
+                <option value="gain">Gain weight</option>
+              </select>
+            </div>
+            <div class="goal-error"></div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </div>
 
       <div id="output" style="display: none">
         <h2>Results</h2>

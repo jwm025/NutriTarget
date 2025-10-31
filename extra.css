@@ -4,11 +4,32 @@
   align-items: center;
 }
 
+/* MAIN CONTENT */
+#mainContent {
+  display: grid;
+  grid-template: 50px/ 1fr;
+  margin-top: 20px;
+}
+
+.nutri-target-header {
+  width: 800px;
+  grid-column: 1/3;
+  padding: 0px 0px;
+}
+
+.bottom-half {
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+}
+
 /* FORM */
 #calc-form {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  grid-column: 1/3;
+  height: 633px;
 }
 
 /* GENDER */
@@ -16,7 +37,8 @@
 .age-container,
 .activity-container,
 .goal-container,
-.height-imperial-container {
+.height-imperial-container,
+.weight-imperial-container {
   display: flex;
   flex-direction: column;
   padding: 13px;
@@ -27,7 +49,8 @@
 .age-container.error,
 .activity-container.error,
 .goal-container.error,
-.height-error-imperial.error {
+.height-imperial-container.error,
+.weight-imperial-container.error {
   background-color: #e53935;
 }
 
@@ -35,33 +58,48 @@
 .age-label-select,
 .activity-label-input,
 .goal-label-select,
-#heightImperial {
+.height-feet,
+.height-inch,
+#weightImperial {
   display: flex;
-  align-items: center;
-  margin-bottom: 15px;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 #gender,
 #age,
 #goal-select,
+#lb {
+  box-sizing: border-box;
+  height: 28px;
+  width: 440px;
+  padding-left: 5px;
+}
+
 #ft,
 #in {
   box-sizing: border-box;
-  height: 21px;
-  width: 208px;
-  padding-left: 5px;
+  height: 28px;
+  width: 217px;
+}
+
+#ft {
+  margin-right: 6px;
 }
 
 #gender.error,
 #age.error,
 #activity.error,
 #goal-select.error,
-#ft.error, #in.error {
+#ft.error,
+#in.error,
+#lb.error {
   border: 1px dashed black;
 }
 
 /* HEIGHT */
-.height-error-metric {
+.height-error-metric,
+.height-metric-container {
   display: none;
 }
 
@@ -70,8 +108,14 @@
   flex-direction: row;
 }
 
+.height-imperial-container {
+  display: flex;
+  flex-direction: column;
+}
+
 /* WEIGHT */
-.weight-error-metric {
+.weight-error-metric,
+.weight-metric-container {
   display: none;
 }
 
@@ -79,13 +123,7 @@
 #activity {
   box-sizing: border-box;
   height: 21px;
-  width: 208px;
-}
-
-/* GOAL */
-#goal-select {
-  height: 21px;
-  width: 208px;
+  width: 440px;
 }
 
 /* ERROR */

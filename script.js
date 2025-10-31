@@ -52,7 +52,7 @@ const activityLevels = [
 function acceptDisclaimer() {
   if (document.getElementById("acknowledge").checked) {
     document.getElementById("disclaimerModal").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
+    document.getElementById("mainContent").style.display = "grid";
   } else {
     alert("Please acknowledge the terms.");
   }
@@ -79,18 +79,26 @@ function showSettings() {
 function toggleUnits() {
   const units = document.getElementById("units").value;
   if (units === "metric") {
+    document.querySelector(".height-imperial-container").style.display = "none";
+    document.querySelector(".height-metric-container").style.display = "flex";
+    document.querySelector(".weight-imperial-container").style.display = "none";
+    document.querySelector(".weight-metric-container").style.display = "flex";
     document.getElementById("heightImperial").style.display = "none";
-    document.getElementById("heightMetric").style.display = "block";
+    document.getElementById("heightMetric").style.display = "flex";
     document.getElementById("weightImperial").style.display = "none";
-    document.getElementById("weightMetric").style.display = "block";
+    document.getElementById("weightMetric").style.display = "flex";
     // document.getElementById("height").required = true;
     // document.getElementById("weight").required = true;
     // document.getElementById("ft").required = false;
     // document.getElementById("lb").required = false;
   } else {
-    document.getElementById("heightImperial").style.display = "block";
+    document.querySelector(".height-imperial-container").style.display = "flex";
+    document.querySelector(".height-metric-container").style.display = "none";
+    document.querySelector(".weight-imperial-container").style.display = "flex";
+    document.querySelector(".weight-metric-container").style.display = "none";
+    document.getElementById("heightImperial").style.display = "flex";
     document.getElementById("heightMetric").style.display = "none";
-    document.getElementById("weightImperial").style.display = "block";
+    document.getElementById("weightImperial").style.display = "flex";
     document.getElementById("weightMetric").style.display = "none";
     // document.getElementById("height").required = false;
     // document.getElementById("weight").required = false;
