@@ -108,6 +108,7 @@ function toggleUnits() {
 }
 
 function calculate() {
+  document.body.style.height = "100%";
   const gender = document.getElementById("gender").value;
   const age = parseFloat(document.getElementById("age").value);
   const units = document.getElementById("units").value || "imperial";
@@ -123,7 +124,7 @@ function calculate() {
   }
   const activityIndex = parseInt(document.getElementById("activity").value);
   const activity = activityLevels[activityIndex - 1].value;
-  const goal = document.getElementById("goal").value;
+  const goal = document.getElementById("goal-select").value;
 
   //Validate inputs
   if (
@@ -189,7 +190,7 @@ function calculate() {
   document.getElementById("carbs").innerText = carbs;
   document.getElementById("fat").innerText = fat;
   generateMealPlan();
-  document.getElementById("output").style.display = "block";
+  document.getElementById("output").style.display = "flex";
 }
 
 function generateMealPlan() {
@@ -258,7 +259,8 @@ function regenerateMeal() {
 }
 
 function clearAll() {
-  document.getElementById("calcForm").reset();
+  document.body.style.height = "100vh";
+  document.getElementById("calc-form").reset();
   document.getElementById("output").style.display = "none";
   toggleUnits();
 }

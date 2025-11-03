@@ -26,7 +26,7 @@
           ><input type="checkbox" id="acknowledge" checked /> I acknowledge and
           agree</label
         ><br /><br />
-        <button onclick="acceptDisclaimer()">Accept</button>
+        <button class="accept-disclaimer-btn">Accept</button>
       </div>
     </div>
 
@@ -72,7 +72,14 @@
           <div class="age-container">
             <div class="age-label-select">
               <label id="age-label" for="age">Age (years):</label>
-              <input type="number" id="age" min="18" max="78" step="1" />
+              <input
+                type="number"
+                id="age"
+                min="18"
+                max="78"
+                step="1"
+                value="56"
+              />
             </div>
             <div class="age-error"></div>
           </div>
@@ -81,11 +88,25 @@
             <div id="heightImperial">
               <div class="height-feet">
                 <label id="feet-label" for="ft">Height (ft):</label>
-                <input type="number" id="ft" min="3" max="8" step="any" />
+                <input
+                  type="number"
+                  id="ft"
+                  min="3"
+                  max="8"
+                  step="any"
+                  value="5"
+                />
               </div>
               <div class="height-inch">
                 <label id="in-label" for="in"> (in):</label>
-                <input type="number" id="in" min="0" max="11" step="any" />
+                <input
+                  type="number"
+                  id="in"
+                  min="0"
+                  max="11"
+                  step="any"
+                  value="6"
+                />
               </div>
             </div>
             <div class="height-error-imperial"></div>
@@ -102,17 +123,25 @@
           <div class="weight-imperial-container">
             <div id="weightImperial">
               <label id="lb-label" for="lb">Weight (lb):</label>
-              <input type="number" id="lb" min="50" max="500" step="any" />
+              <input
+                type="number"
+                id="lb"
+                min="50"
+                max="500"
+                step="any"
+                value="70"
+              />
             </div>
             <div class="weight-error-imperial"></div>
           </div>
           <div class="weight-metric-container">
             <div id="weightMetric" style="display: none">
-              <label for="weight">Weight (kg):</label>
+              <label id="kg-label" for="weight">Weight (kg):</label>
               <input type="number" id="weight" min="20" max="250" step="any" />
             </div>
             <div class="weight-error-metric"></div>
           </div>
+
           <!-- ACTIVITY -->
           <div class="activity-container">
             <div class="activity-label-input">
@@ -123,11 +152,12 @@
                 min="0"
                 max="4"
                 step="1"
-                value="0"
+                value="3"
               />
             </div>
             <div class="activity-error"></div>
           </div>
+
           <!-- GENDER -->
           <div class="gender-container">
             <div class="gender-label-select">
@@ -153,21 +183,42 @@
             </div>
             <div class="goal-error"></div>
           </div>
-          <button type="submit">Calculate</button>
+
+          <div class="calcOrClear">
+            <button class="btn-function" id="submit-btn" type="submit">
+              Calculate
+            </button>
+            <button
+              class="btn-function"
+              id="clear-btn"
+              onclick="clearAll()"
+              type="button"
+            >
+              Clear All
+            </button>
+          </div>
         </form>
       </div>
 
       <div id="output" style="display: none">
         <h2>Results</h2>
-        <p>Daily Recommended Calories: <span id="calories"></span></p>
-        <p>Macronutrient Ratio (example: 30% protein, 40% carbs, 30% fat):</p>
-        <ul>
-          <li>Protein: <span id="protein"></span>g</li>
-          <li>Carbs: <span id="carbs"></span>g</li>
-          <li>Fat: <span id="fat"></span>g</li>
-        </ul>
+        <div class="calories-info">
+          <div class="daily-calo-container">
+            <div class="daily-calo">Daily Recommended Calories</div>
+            <span id="calories"></span>
+          </div>
+          <div class="macro-info">
+            <div>Macronutrient Ratio</div>
+            <div class="macro-details">
+              <div>Protein: <span id="protein"></span>g</div>
+              <div>Carbs: <span id="carbs"></span>g</div>
+              <div>Fat: <span id="fat"></span>g</div>
+            </div>
+          </div>
+        </div>
         <h3>Example Meal Plan</h3>
         <div id="mealPlan"></div>
+        <h3>Total Meal Plan Calculation</h3>
         <p>
           Total Meal Plan Calories: <span id="totalMealCal"></span> (matches
           target)
@@ -177,10 +228,12 @@
           <span id="totalMealC"></span>g, Fat <span id="totalMealF"></span>g
           (approximates target)
         </p>
-        <button type="button" onclick="regenerateMeal()">
-          Regenerate Meal Plan
-        </button>
-        <button type="button" onclick="clearAll()">Clear All</button>
+
+        <div class="regen-btn-container">
+          <button id="regen-btn" type="button" onclick="regenerateMeal()">
+            Regenerate Meal Plan
+          </button>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>

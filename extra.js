@@ -33,6 +33,13 @@ const heightMetricContainer = document.querySelector(
 );
 const heightErrorMetric = document.querySelector(".height-error-metric");
 
+const kgInput = document.querySelector("#weight");
+const kgLabel = document.querySelector("#kg-label");
+const weightMetricContainer = document.querySelector(
+  ".weight-metric-container"
+);
+const weightErrorMetric = document.querySelector(".weight-error-metric");
+
 const activityInput = document.querySelector("#activity");
 const activityError = document.querySelector(".activity-error");
 const activityContainer = document.querySelector(".activity-container");
@@ -44,6 +51,11 @@ const goalContainer = document.querySelector(".goal-container");
 const goalLabel = document.querySelector("#goal-container");
 
 const calcForm = document.querySelector("#calc-form");
+const acceptBtn = document.querySelector(".accept-disclaimer-btn");
+
+acceptBtn.addEventListener("click", () => {
+  acceptDisclaimer();
+});
 
 genderSelect.addEventListener("change", () => {
   genderValidation();
@@ -63,6 +75,14 @@ inchInput.addEventListener("input", () => {
 
 lbInput.addEventListener("input", () => {
   weightImperialValidation();
+});
+
+cmInput.addEventListener("input", () => {
+  heightMetricValidation();
+});
+
+kgInput.addEventListener("input", () => {
+  weightMetricValidation();
 });
 
 activityInput.addEventListener("change", () => {
@@ -152,16 +172,15 @@ function weightImperialValidation() {
     lbInput.value === ""
   ) {
     if (checkWeightImperialError()) {
-      weightErrorImperial.textContent = "The range is 18 to 78!";
+      weightErrorImperial.textContent = "Weight range (lb): 50-500";
     } else {
-      weightErrorImperial.textContent = "Missing age.";
+      weightErrorImperial.textContent = "Missing weight.";
     }
     weightImperialContainer.classList.add("error");
     lbInput.classList.add("error");
     lbLabel.classList.add("error");
     return true;
   } else {
-    console.log("no");
     weightErrorImperial.textContent = "";
     weightImperialContainer.classList.remove("error");
     lbInput.classList.remove("error");
@@ -171,7 +190,11 @@ function weightImperialValidation() {
 }
 
 function heightMetricValidation() {
-  if (cmInput.value === "" || cmInput.validity.rangeOverflow) {
+  if (
+    cmInput.value === "" ||
+    cmInput.validity.rangeOverflow ||
+    cmInput.validity.rangeUnderflow
+  ) {
     if (checkHeightMetricError()) {
       heightErrorMetric.textContent = "Height range (cm): 90-250";
     } else {
@@ -190,12 +213,37 @@ function heightMetricValidation() {
   }
 }
 
+function weightMetricValidation() {
+  if (
+    kgInput.validity.rangeOverflow ||
+    kgInput.validity.rangeUnderflow ||
+    kgInput.value === ""
+  ) {
+    if (checkWeightMetricError()) {
+      weightErrorMetric.textContent = "Weight range (kg): 20-250";
+    } else {
+      weightErrorMetric.textContent = "Missing weight.";
+    }
+    weightMetricContainer.classList.add("error");
+    kgInput.classList.add("error");
+    kgLabel.classList.add("error");
+    return true;
+  } else {
+    weightErrorMetric.textContent = "";
+    weightMetricContainer.classList.remove("error");
+    kgInput.classList.remove("error");
+    kgLabel.classList.remove("error");
+    return false;
+  }
+}
+
 function activityValidation() {
   if (activityInput.value === "0") {
     activityError.textContent = "Please choose an activity level.";
     activityContainer.classList.add("error");
     activityInput.classList.add("error");
     activityLabel.classList.add("error");
+    activityError.classList.add("error");
     return true;
   } else {
     if (activityInput.value === "1") {
@@ -212,6 +260,7 @@ function activityValidation() {
     activityContainer.classList.remove("error");
     activityInput.classList.remove("error");
     activityLabel.classList.remove("error");
+    activityError.classList.remove("error");
     return false;
   }
 }
@@ -263,9 +312,17 @@ function checkWeightImperialError() {
 }
 
 function checkHeightMetricError() {
-  if (cmInput.validity.rangeOverflow || cmInput.validity.rangeOverflow) {
+  if (cmInput.validity.rangeOverflow || cmInput.validity.rangeUnderflow) {
     return true;
   } else if (cmInput.value === "" || cmInput.value === "") {
+    return false;
+  }
+}
+
+function checkWeightMetricError() {
+  if (kgInput.validity.rangeOverflow || kgInput.validity.rangeUnderflow) {
+    return true;
+  } else if (kgInput.value === "") {
     return false;
   }
 }
@@ -278,19 +335,36 @@ calcForm.addEventListener("submit", (e) => {
 
   const genderValid = genderValidation();
   const ageValid = ageValidation();
-  const heightImpValidation = heightImperialValidation();
-  const weightImpValidation = weightImperialValidation();
   const activityValid = activityValidation();
   const goalValid = goalValidation();
-
-  if (
-    !genderValid ||
-    !ageValid ||
-    !heightImpValidation ||
-    !weightImpValidation ||
-    !activityValid ||
-    !goalValid
-  ) {
-    // calculate();
+  if (units === "imperial") {
+    const heightImpValidation = heightImperialValidation();
+    const weightImpValidation = weightImperialValidation();
+    checkAllValidation(
+      genderValid,
+      ageValid,
+      activityValid,
+      goalValid,
+      heightImpValidation,
+      weightImpValidation
+    );
+  } else {
+    const heightMeValidation = heightMetricValidation();
+    const weightMeValidation = weightMetricValidation();
+    checkAllValidation(
+      genderValid,
+      ageValid,
+      activityValid,
+      goalValid,
+      heightMeValidation,
+      weightMeValidation
+    );
   }
 });
+
+function checkAllValidation(gender, age, height, weight, activity, goal) {
+  console.log(gender, age, height, weight, activity, goal);
+  if (!gender && !age && !height && !weight && !activity && !goal) {
+    calculate();
+  }
+}
