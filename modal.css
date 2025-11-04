@@ -1,0 +1,63 @@
+/* Disclaimer */
+
+#disclaimerModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.acknowledge-check {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.acknowledge-label {
+  width: 250px;
+}
+
+#acknowledge {
+  width: 13px;
+}
+
+.accept-disclaimer-btn {
+  margin-top: 15px;
+  width: 150px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.accept-disclaimer-btn:hover {
+  cursor: pointer;
+}
+
+.accept-disclaimer-btn:active {
+  opacity: 0.8;
+}
+
+/* SETTING */
+#settingsModal {
+  justify-content: center;
+  align-items: center;
+}
+
+select[class="setting-select"] {
+  box-sizing: border-box;
+  width: 400px;
+  height: 28px;
+}
+
+#setting-modal {
+  gap: 10px;
+}
+
+#setting-header {
+  font-size: 1.5em;
+  font-weight: bold;
+}

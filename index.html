@@ -6,11 +6,13 @@
     <title>NutriTarget</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="extra.css" />
+    <link rel="stylesheet" href="modal.css" />
+    <link rel="stylesheet" href="color.css" />
   </head>
   <body>
-    <div id="disclaimerModal" class="modal" style="display: block">
+    <div id="disclaimerModal" class="modal">
       <div class="modal-content">
-        <h2>Disclaimer</h2>
+        <h1>Disclaimer</h1>
         <p>
           This application does not provide professional medical advice. The
           calorie calculations and meal plans are for informational purposes
@@ -22,10 +24,10 @@
           and
           <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>.
         </p>
-        <label
-          ><input type="checkbox" id="acknowledge" checked /> I acknowledge and
-          agree</label
-        ><br /><br />
+        <label class="acknowledge-label">
+          <input type="checkbox" id="acknowledge" checked />
+          I acknowledge and agree
+        </label>
         <button class="accept-disclaimer-btn">Accept</button>
       </div>
     </div>
@@ -55,14 +57,23 @@
         <button id="settingsButton" onclick="showSettings()">Settings</button>
       </div>
       <div id="settingsModal" class="modal">
-        <div class="modal-content">
-          <h2>Settings</h2>
-          <label for="units">Units:</label>
-          <select id="units" onchange="toggleUnits()">
-            <option value="imperial">Imperial (ft/in, lb)</option>
-            <option value="metric">Metric (cm, kg)</option></select
-          ><br /><br />
-          <button onclick="closeModal('settingsModal')">Close</button>
+        <div class="modal-content" id="setting-modal">
+          <div id="setting-header">Settings</div>
+          <div class="setting-box">
+            <label for="units">Units:</label>
+            <select class="setting-select" id="units" onchange="toggleUnits()">
+              <option value="imperial">Imperial (ft/in, lb)</option>
+              <option value="metric">Metric (cm, kg)</option>
+            </select>
+          </div>
+
+          <div class="setting-header">
+            <label for="mode">Mode:</label>
+            <select class="setting-select" id="mode">
+              <option value="light">Light Mode</option>
+              <option value="dark">Dark Mode</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -238,5 +249,7 @@
     </div>
     <script src="script.js"></script>
     <script src="extra.js"></script>
+    <script src="modal.js"></script>
+    <script src="color.js"></script>
   </body>
 </html>

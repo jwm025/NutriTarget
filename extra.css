@@ -6,7 +6,6 @@
 
 /* MAIN CONTENT */
 #mainContent {
-  background-color: hsl(0 0% 95%);
   display: grid;
   grid-template: 50px 1fr 1fr/ 1fr;
   padding: 20px 30px;
@@ -32,7 +31,6 @@
   gap: 5px;
   grid-column: 1/3;
   height: 633px;
-  background-color: hsl(0 0% 90%);
 }
 
 /* GENDER */
@@ -166,7 +164,6 @@ label.error {
 /* OUTPUT */
 #output {
   display: flex;
-  background-color: hsl(0 0% 90%);
   flex-direction: column;
   grid-row: 3/4;
 }

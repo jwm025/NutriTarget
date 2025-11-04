@@ -1,0 +1,39 @@
+/* LIGHT */
+body {
+  background-color: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 5%);
+}
+
+#mainContent {
+  background-color: hsl(0 0% 95%);
+}
+
+#calc-form {
+  background-color: hsl(0 0% 90%);
+}
+
+#output {
+  background-color: hsl(0 0% 90%);
+}
+
+/* DARK */
+body.dark {
+  background-color: hsl(0 0% 0%);
+  color: hsl(0, 0%, 95%);
+}
+
+#mainContent.dark {
+  background-color: hsl(0 0% 5%);
+}
+
+#calc-form.dark,
+#output.dark,
+.modal-content.dark {
+  background-color: hsl(0 0% 10%);
+  border: hsl(0 0% 30%);
+}
+
+.activity-error.dark {
+  font: 10px;
+  color: hsl(0, 0%, 70%);
+}

@@ -73,7 +73,7 @@ function closeModal(modalId) {
 }
 
 function showSettings() {
-  document.getElementById("settingsModal").style.display = "block";
+  document.getElementById("settingsModal").style.display = "flex";
 }
 
 function toggleUnits() {
@@ -87,10 +87,23 @@ function toggleUnits() {
     document.getElementById("heightMetric").style.display = "flex";
     document.getElementById("weightImperial").style.display = "none";
     document.getElementById("weightMetric").style.display = "flex";
-    // document.getElementById("height").required = true;
-    // document.getElementById("weight").required = true;
-    // document.getElementById("ft").required = false;
-    // document.getElementById("lb").required = false;
+    if (
+      document.querySelector("#ft").value !== "" ||
+      document.querySelector("#in").value !== ""
+    ) {
+      const convertedValue = Math.ceil(
+        document.querySelector("#ft").value * 30.48 +
+          document.querySelector("#in").value * 2.54
+      );
+      document.querySelector("#height").value = convertedValue;
+    }
+
+    if (document.querySelector("#lb").value !== "") {
+      const convertedValue = Math.ceil(
+        document.querySelector("#lb").value / 2.205
+      );
+      document.querySelector("#weight").value = convertedValue;
+    }
   } else {
     document.querySelector(".height-imperial-container").style.display = "flex";
     document.querySelector(".height-metric-container").style.display = "none";
@@ -100,10 +113,23 @@ function toggleUnits() {
     document.getElementById("heightMetric").style.display = "none";
     document.getElementById("weightImperial").style.display = "flex";
     document.getElementById("weightMetric").style.display = "none";
-    // document.getElementById("height").required = false;
-    // document.getElementById("weight").required = false;
-    // document.getElementById("ft").required = true;
-    // document.getElementById("lb").required = true;
+    if (document.querySelector("#height").value !== "") {
+      const convertedValueFt = Math.floor(
+        document.querySelector("#height").value / 2.54 / 12
+      );
+      const convertedValueIn = Math.floor(
+        document.querySelector("#height").value / 2.54 - 12 * convertedValueFt
+      );
+      document.querySelector("#ft").value = convertedValueFt;
+      document.querySelector("#in").value = convertedValueIn;
+    }
+
+    if (document.querySelector("#weight").value !== "") {
+      const convertedValue = Math.floor(
+        document.querySelector("#weight").value * 2.205
+      );
+      document.querySelector("#lb").value = convertedValue;
+    }
   }
 }
 
@@ -262,6 +288,7 @@ function clearAll() {
   document.body.style.height = "100vh";
   document.getElementById("calc-form").reset();
   document.getElementById("output").style.display = "none";
+  clearAllError();
   toggleUnits();
 }
 
