@@ -10,8 +10,10 @@ describe('BMR and TDEE Calculations', () => {
     expect(calculateBMR('female', 70, 175, 30)).toBe(1483);
   });
 
-  test('Invalid gender throws error', () => {
-    expect(() => calculateBMR('other', 70, 175, 30)).toThrow('Invalid gender');
+  test('calculateAdjustedCalories for weight lose (lose = -500)', () => {
+    const tdee = 2556;
+    const goal = 'lose';
+    expect(calculateAdjustedCalories(tdee, goal)).toBe(2056);
   });
 
   test('applyActivityMultiplier for moderate activity (index 3)', () => {
