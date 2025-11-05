@@ -34,3 +34,5 @@ describe('Meal Scaling', () => {
     expect(scaled.f).toBe(21);
   });
 });
+
+//node env test
