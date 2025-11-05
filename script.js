@@ -237,6 +237,16 @@ function applyActivityMultiplier(bmr, activityIndex) {
   return Math.round(bmr * multipliers[activityIndex]);
 }
 
+function calculateAdjustedCalories(tdee, goal) {
+  let adjustment = 0;
+  if (goal === 'lose') {
+    adjustment = -500;
+  } else if (goal === 'gain') {
+    adjustment = 500;
+  } else if (goal !== 'maintain') {
+    throw new Error('Invalid goal');
+  }
+
 function calculateMacros(totalCal) {
   const protein = Math.round((totalCal * 0.3) / 4);
   const carbs = Math.round((totalCal * 0.4) / 4);
@@ -258,6 +268,7 @@ function scaleMeal(meal, targetCal) {
 module.exports = {
   calculateBMR,
   applyActivityMultiplier,
+  calculateAdjustedCalories,
   calculateMacros,
   scaleMeal
 };
