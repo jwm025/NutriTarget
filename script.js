@@ -239,8 +239,8 @@ function applyActivityMultiplier(bmr, activityIndex) {
 
 function calculateMacros(totalCal) {
   const protein = Math.round((totalCal * 0.3) / 4);
-  const carbs = Math.round((totalCal * 0.4 / 4);
-  const fat = Math.round((totalCal * 0.3 / 9);
+  const carbs = Math.round((totalCal * 0.4) / 4);
+  const fat = Math.round((totalCal * 0.3) / 9);
   return { protein, carbs, fat };
 }
 
