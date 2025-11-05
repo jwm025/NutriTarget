@@ -1,5 +1,5 @@
-import { expect, test, describe } from '@jest/globals';
-import { calculateBMR, applyActivityMultiplier, calculateMacros, scaleMeal } from '../script.js';
+const { expect, test, describe } = require('@jest/globals');
+const { calculateBMR, applyActivityMultiplier, calculateMacros, scaleMeal } = require('../script.js');
 
 describe('BMR and TDEE Calculations', () => {
   test('calculateBMR for male (30y, 70kg, 175cm)', () => {
@@ -34,5 +34,3 @@ describe('Meal Scaling', () => {
     expect(scaled.f).toBe(21);
   });
 });
-
-//node env test
