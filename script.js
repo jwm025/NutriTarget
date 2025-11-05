@@ -239,12 +239,10 @@ function applyActivityMultiplier(bmr, activityIndex) {
 
 function calculateAdjustedCalories(tdee, goal) {
   let adjustment = 0;
-  if (goal === 'lose') {
-    adjustment = -500;
-  } else if (goal === 'gain') {
-    adjustment = 500;
-  } else if (goal !== 'maintain') {
-    throw new Error('Invalid goal');
+  if (goal === 'lose') adjustment = -500;
+  else if (goal === 'gain') adjustment = 500;
+  else if (goal !== 'maintain') throw new Error('Invalid goal');
+  return tdee + adjustment;
   }
 
 function calculateMacros(totalCal) {
