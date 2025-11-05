@@ -1,5 +1,5 @@
 const { expect, test, describe } = require('@jest/globals');
-const { calculateBMR, applyActivityMultiplier, calculateMacros, scaleMeal } = require('../script.js');
+const { calculateBMR, applyActivityMultiplier, calculateAdjustedCalories, calculateMacros, scaleMeal } = require('../script.js');
 
 describe('BMR and TDEE Calculations', () => {
   test('calculateBMR for male (30y, 70kg, 175cm)', () => {
@@ -10,14 +10,14 @@ describe('BMR and TDEE Calculations', () => {
     expect(calculateBMR('female', 70, 175, 30)).toBe(1483);
   });
 
+  test('applyActivityMultiplier for moderate activity (index 3)', () => {
+    expect(applyActivityMultiplier(1649, 3)).toBe(2556);
+  });
+
   test('calculateAdjustedCalories for weight lose (lose = -500)', () => {
     const tdee = 2556;
     const goal = 'lose';
     expect(calculateAdjustedCalories(tdee, goal)).toBe(2056);
-  });
-
-  test('applyActivityMultiplier for moderate activity (index 3)', () => {
-    expect(applyActivityMultiplier(1649, 3)).toBe(2556);
   });
 });
 
