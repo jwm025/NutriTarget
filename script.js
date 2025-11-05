@@ -216,9 +216,9 @@ function clearAll() {
 }
 
 //Initial setup
-document.addEventListener('DOMContentLoaded', function() {
-  toggleUnits();
-  updateActivityText(0);
+//document.addEventListener('DOMContentLoaded', function() {
+//  toggleUnits();
+ // updateActivityText(0);
 });
 
 //CJS exports for jest tests
