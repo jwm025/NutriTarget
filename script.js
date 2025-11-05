@@ -216,10 +216,10 @@ function clearAll() {
 }
 
 //Initial setup
-document.addEventListener('DOMContentLoaded', function() {
-  toggleUnits();
-  updateActivityText(0);
-});
+//document.addEventListener('DOMContentLoaded', function() {
+  //toggleUnits();
+  //updateActivityText(0);
+//});
 
 //CJS functions for tests
 function calculateBMR(gender, weight, height, age) {
