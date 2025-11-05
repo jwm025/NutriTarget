@@ -252,3 +252,11 @@ export function scaleMeal(meal, targetCal) {
     c: Math.round(meal.c * scale),
     f: Math.round(meal.f * scale),
   };
+
+//CJS exports for jest tests
+module.exports = {
+  calculateBMR,
+  applyActivityMultiplier,
+  calculateMacros,
+  scaleMeal,
+};
