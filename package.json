@@ -1,7 +1,6 @@
 {
   "name": "nutritarget",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage"
