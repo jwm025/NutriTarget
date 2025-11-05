@@ -216,10 +216,10 @@ function clearAll() {
 }
 
 //Initial setup
-//document.addEventListener('DOMContentLoaded', function() {
-//  toggleUnits();
- // updateActivityText(0);
-//});
+document.addEventListener('DOMContentLoaded', function() {
+  toggleUnits();
+  updateActivityText(0);
+});
 
 //CJS functions for tests
 function calculateBMR(gender, weight, height, age) {
@@ -233,7 +233,7 @@ function calculateBMR(gender, weight, height, age) {
 
 function applyActivityMultiplier(bmr, activityIndex) {
   const multipliers = [0, 1.2, 1.375, 1.55, 1.725, 1.9];
-  if (activityIndex < 1 || activtyIndex > 5) throw new Error('Invalid activity');
+  if (activityIndex < 1 || activityIndex > 5) throw new Error('Invalid activity');
   return Math.round(bmr * multipliers[activityIndex]);
 }
 
