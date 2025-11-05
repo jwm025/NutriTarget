@@ -226,5 +226,5 @@ module.exports = {
   calculateBMR,
   applyActivityMultiplier,
   calculateMacros,
-  scaleMeal,
+  scaleMeal
 };
