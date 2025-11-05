@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NutriTarget</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="extra.css" />
-    <link rel="stylesheet" href="modal.css" />
-    <link rel="stylesheet" href="color.css" />
+    <link rel="stylesheet" href="ori/style.css" />
+    <link rel="stylesheet" href="extra/extra.css" />
+    <link rel="stylesheet" href="modal/modal.css" />
+    <link rel="stylesheet" href="color/color.css" />
   </head>
   <body>
     <div id="disclaimerModal" class="modal">
@@ -54,7 +54,10 @@
     <div id="mainContent" style="display: none">
       <div class="nutri-target-header">
         <h1>NutriTarget</h1>
-        <button id="settingsButton" onclick="showSettings()">Settings</button>
+        <div>
+          <button id="recallsButton">Recall</button>
+          <button id="settingsButton" onclick="showSettings()">Settings</button>
+        </div>
       </div>
       <div id="settingsModal" class="modal">
         <div class="modal-content" id="setting-modal">
@@ -244,12 +247,25 @@
           <button id="regen-btn" type="button" onclick="regenerateMeal()">
             Regenerate Meal Plan
           </button>
+          <button id="saving-btn" type="button">Save</button>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
-    <script src="extra.js"></script>
-    <script src="modal.js"></script>
-    <script src="color.js"></script>
+
+    <div class="saving-modal-container">
+      <div class="saving-modal">
+        <div>Select a set to save</div>
+        <div class="slot-container">
+          <div class="slot" id="slot-1"></div>
+          <div class="slot" id="slot-2"></div>
+          <div class="slot" id="slot-3"></div>
+        </div>
+      </div>
+    </div>
+    <script src="ori/script.js"></script>
+    <script src="extra/extra.js"></script>
+    <script src="modal/modal.js"></script>
+    <script src="color/color.js"></script>
+    <script src="saving/saving.js"></script>
   </body>
 </html>
