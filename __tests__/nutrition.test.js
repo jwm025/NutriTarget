@@ -3,11 +3,11 @@ const { calculateBMR, applyActivityMultiplier, calculateMacros, scaleMeal } = re
 
 describe('BMR and TDEE Calculations', () => {
   test('calculateBMR for male (30y, 70kg, 175cm)', () => {
-    expect(calculateBMR('male', 70, 175, 30)).toBe(1668);
+    expect(calculateBMR('male', 70, 175, 30)).toBe(1649);
   });
 
   test('calculateBMR for female (30y, 70kg, 175cm)', () => {
-    expect(calculateBMR('female', 70, 175, 30)).toBe(1502);
+    expect(calculateBMR('female', 70, 175, 30)).toBe(1483);
   });
 
   test('Invalid gender throws error', () => {
@@ -15,7 +15,7 @@ describe('BMR and TDEE Calculations', () => {
   });
 
   test('applyActivityMultiplier for moderate activity (index 3)', () => {
-    expect(applyActivityMultiplier(1668, 3)).toBe(2585);
+    expect(applyActivityMultiplier(1649, 3)).toBe(2556);
   });
 });
 
