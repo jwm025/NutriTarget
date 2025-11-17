@@ -43,6 +43,12 @@ h2, h3 {
   background-color: rgba(0,0,0,0.4);
 }
 
+#disclaimerModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
@@ -50,6 +56,13 @@ h2, h3 {
   border: 1px solid #888;
   width: 80%;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.acknowledge-label {
+  width: 250px;
 }
 
 #settingsModal .modal-content {
