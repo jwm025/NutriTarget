@@ -66,29 +66,36 @@
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select><br><br>
+      <div class="select-error"></div>
       <label for="age">Age (years):</label>
       <input type="number" id="age" required min="18" max="78" step="1" placeholder="E.g., 18-78"><br><br>
+      <div class="age-error"></div>
       <div id="heightImperial">
         <label for="ft">Height (ft):</label>
         <input type="number" id="ft" required min="3" max="8" step="any" placeholder="E.g., 3-8">
         <label for="in"> (in):</label>
         <input type="number" id="in" required min="0" max="11" step="any" placeholder="E.g., 0-11"><br><br>
       </div>
+      <div class="height-error-imperial"></div>
       <div id="heightMetric" style="display:none;">
         <label for="height">Height (cm):</label>
         <input type="number" id="height" required min="90" max="250" step="any" placeholder="E.g., 90-250"><br><br>
       </div>
+      <div class="height-error-metric"></div>
       <div id="weightImperial">
         <label for="lb">Weight (lb):</label>
         <input type="number" id="lb" required min="50" max="500" step="any" placeholder="E.g., 50-500"><br><br>
       </div>
+      <div class="weight-error-imperial"></div>
       <div id="weightMetric" style="display: none;">
         <label for="weight">Weight (kg):</label>
         <input type="number" id="weight" required min="20" max="250" step="any" placeholder="E.g., 20-250"><br><br>
       </div>
+      <div class="weight-error-metric"></div>
       <label for="activity">Activity Level:</label>
       <input type="range" id="activity" min="0" max="4" step="1" value="0" oninput="updateActivityText(this.value)"><br>
       <span id="activityText">Select activity level</span><br><br>
+      <div class="activity-error"></div>
       <label for="goal">Weight Goal:</label>
       <select id="goal" required>
         <option value="">Select</option>
@@ -96,6 +103,7 @@
         <option value="maintain">Maintain weight</option>
         <option value="gain">Gain weight</option>
       </select><br><br>
+      <div class="goal-error"></div>
       <button type="button" onclick="calculate()">Calculate</button>
     </form>
     <div id="output" style="display: none;">
