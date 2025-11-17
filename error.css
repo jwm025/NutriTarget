@@ -27,3 +27,20 @@
 .activity-error.error {
   color: hsl(0, 0%, 5%);
 }
+
+.select-error,
+.age-error,
+.height-error-imperial,
+.height-error-metric,
+.weight-error-imperial,
+.weight-error-metric,
+.activity-error,
+.goal-error {
+  height: 10px;
+  padding-left: 10px;
+}
+
+/* LABEL */
+label.error {
+  font-weight: bold;
+}
