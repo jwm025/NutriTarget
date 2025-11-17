@@ -59,17 +59,29 @@
       </div>
     </div>
 
+    <div class="bottom-half">
     <form id="calcForm">
+      <div class="gender-container">
+          <div class="gender-label-select">
       <label for="gender">Gender:</label>
       <select id="gender" required>
         <option value="">Select</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select><br><br>
+          </div>
       <div class="select-error"></div>
+      </div>
+      
+      <div class="age-container">
+          <div class="age-label-select">
       <label for="age">Age (years):</label>
       <input type="number" id="age" required min="18" max="78" step="1" placeholder="E.g., 18-78"><br><br>
+          </div>
       <div class="age-error"></div>
+      </div>
+      
+      <div class="height-imperial-container">
       <div id="heightImperial">
         <label for="ft">Height (ft):</label>
         <input type="number" id="ft" required min="3" max="8" step="any" placeholder="E.g., 3-8">
@@ -77,25 +89,43 @@
         <input type="number" id="in" required min="0" max="11" step="any" placeholder="E.g., 0-11"><br><br>
       </div>
       <div class="height-error-imperial"></div>
+      </div>
+     
+      <div class="height-metric-container">
       <div id="heightMetric" style="display:none;">
         <label for="height">Height (cm):</label>
         <input type="number" id="height" required min="90" max="250" step="any" placeholder="E.g., 90-250"><br><br>
       </div>
       <div class="height-error-metric"></div>
+      </div>
+     
+      <div class="weight-imperial-container">
       <div id="weightImperial">
         <label for="lb">Weight (lb):</label>
         <input type="number" id="lb" required min="50" max="500" step="any" placeholder="E.g., 50-500"><br><br>
       </div>
       <div class="weight-error-imperial"></div>
+      </div>
+     
+      <div class="weight-metric-container">
       <div id="weightMetric" style="display: none;">
         <label for="weight">Weight (kg):</label>
         <input type="number" id="weight" required min="20" max="250" step="any" placeholder="E.g., 20-250"><br><br>
       </div>
       <div class="weight-error-metric"></div>
+      </div>
+      
+      <div class="activity-container">
+          <div class="activity-label-input">
       <label for="activity">Activity Level:</label>
       <input type="range" id="activity" min="0" max="4" step="1" value="0" oninput="updateActivityText(this.value)"><br>
       <span id="activityText">Select activity level</span><br><br>
+          </div>
       <div class="activity-error"></div>
+      </div>
+      
+      <div class="goal-container">
+          <div class="goal-label-select">
       <label for="goal">Weight Goal:</label>
       <select id="goal" required>
         <option value="">Select</option>
@@ -103,7 +133,9 @@
         <option value="maintain">Maintain weight</option>
         <option value="gain">Gain weight</option>
       </select><br><br>
+          </div>
       <div class="goal-error"></div>
+      </div>
       <button type="button" onclick="calculate()">Calculate</button>
     </form>
     <div id="output" style="display: none;">
