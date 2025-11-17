@@ -290,8 +290,3 @@ function clearAll() {
   clearAllError();
   toggleUnits();
 }
-
-//Initial setup
-document.addEventListener("DOMContentLoaded", function () {
-  toggleUnits();
-});
