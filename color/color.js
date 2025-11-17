@@ -1,7 +1,11 @@
+
 const toggleMode = document.querySelector("#mode");
 const mainContent = document.querySelector("#mainContent");
 const output = document.querySelector("#output");
 const settingModal1 = document.querySelector("#setting-modal");
+const recallModal = document.querySelector(".recall-modal");
+const saveModal = document.querySelector(".saving-modal");
+const recallOutput = document.querySelector("#recall-output");
 
 toggleMode.addEventListener("change", () => {
   const selectMode = toggleMode.value;
@@ -13,6 +17,9 @@ toggleMode.addEventListener("change", () => {
     output.classList.add("dark");
     activityError.classList.add("dark");
     settingModal1.classList.add("dark");
+    recallModal.classList.add("dark");
+    saveModal.classList.add("dark");
+    recallOutput.classList.add("dark");
   } else {
     document.body.classList.remove("dark");
     mainContent.classList.remove("dark");
@@ -20,5 +27,8 @@ toggleMode.addEventListener("change", () => {
     output.classList.remove("dark");
     activityError.classList.remove("dark");
     settingModal1.classList.remove("dark");
+    recallModal.classList.remove("dark");
+    saveModal.classList.remove("dark");
+    recallOutput.classList.remove("dark");
   }
 });
