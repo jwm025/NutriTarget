@@ -1,3 +1,4 @@
+
 :root {
   --shadow: 0px 2px 2px hsla(0, 0%, 0%, 0.07), 0px 4px 4px hsla(0, 0%, 0%, 0.15);
 }
@@ -15,11 +16,20 @@ body {
 }
 
 #calc-form,
-#output {
+#output,
+#recall-output,
+.recall-modal,
+.saving-modal {
   background-color: hsl(0 0% 90%);
   border: solid 1px hsl(0 0% 85%);
   border-top: solid 1px hsl(0, 0%, 100%);
   box-shadow: var(--shadow);
+}
+
+#recall-output,
+.recall-modal,
+.saving-modal {
+  background-color: hsl(0 0% 100%);
 }
 
 /* DARK */
@@ -35,7 +45,10 @@ body.dark {
 }
 
 #calc-form.dark,
-#output.dark {
+#output.dark,
+#recall-output.dark,
+.recall-modal.dark,
+.saving-modal.dark {
   background-color: hsl(0 0% 10%);
   border: solid 1px hsl(0 0% 15%);
   border-top: solid 1px hsl(0, 0%, 60%);
