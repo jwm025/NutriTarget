@@ -1,3 +1,4 @@
+
 const settingModal = document.querySelector("#settingsModal");
 
 settingModal.addEventListener("click", (e) => {
