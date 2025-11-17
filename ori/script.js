@@ -290,3 +290,53 @@ function clearAll() {
   clearAllError();
   toggleUnits();
 }
+
+//CJS functions for tests
+function calculateBMR(gender, weight, height, age) {
+  if (gender === 'male') {
+    return Math.round(10 * weight + 6.25 * height - 5 * age + 5);
+  } else if (gender === 'female') {
+    return Math.round(10 * weight + 6.25 * height - 5 * age - 161);
+  }
+  throw new Error('Invalid gender');
+}
+
+function applyActivityMultiplier(bmr, activityIndex) {
+  const multipliers = [0, 1.2, 1.375, 1.55, 1.725, 1.9];
+  if (activityIndex < 1 || activityIndex > 5) throw new Error('Invalid activity');
+  return Math.round(bmr * multipliers[activityIndex]);
+}
+
+function calculateAdjustedCalories(tdee, goal) {
+  let adjustment = 0;
+  if (goal === 'lose') adjustment = -500;
+  else if (goal === 'gain') adjustment = 500;
+  else if (goal !== 'maintain') throw new Error('Invalid goal');
+  return tdee + adjustment;
+  }
+
+function calculateMacros(totalCal) {
+  const protein = Math.round((totalCal * 0.3) / 4);
+  const carbs = Math.round((totalCal * 0.4) / 4);
+  const fat = Math.round((totalCal * 0.3) / 9);
+  return { protein, carbs, fat };
+}
+
+function scaleMeal(meal, targetCal) {
+  const scale = targetCal / meal.cal;
+  return {
+    cal: targetCal,
+    p: Math.round(meal.p * scale),
+    c: Math.round(meal.c * scale),
+    f: Math.round(meal.f * scale)
+  };
+}
+
+//CJS exports for jest tests
+module.exports = {
+  calculateBMR,
+  applyActivityMultiplier,
+  calculateAdjustedCalories,
+  calculateMacros,
+  scaleMeal
+};
