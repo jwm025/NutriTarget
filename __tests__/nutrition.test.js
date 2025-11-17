@@ -1,5 +1,5 @@
 const { expect, test, describe } = require('@jest/globals');
-const { calculateBMR, applyActivityMultiplier, calculateAdjustedCalories, calculateMacros, scaleMeal } = require('../script.js');
+const { calculateBMR, applyActivityMultiplier, calculateAdjustedCalories, calculateMacros, scaleMeal } = require('../ori/script.js');
 
 describe('BMR and TDEE Calculations', () => {
   test('calculateBMR for male (30y, 70kg, 175cm)', () => {
