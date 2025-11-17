@@ -1,3 +1,4 @@
+
 const genderSelect = document.querySelector("#gender");
 const genderSelectError = document.querySelector(".select-error");
 const genderContainer = document.querySelector(".gender-container");
@@ -371,39 +372,16 @@ function checkAllValidation(gender, age, height, weight, activity, goal) {
 
 // NEVER DO THIS
 function clearAllError() {
+  const allErrorClass = document.querySelectorAll(".error");
+  allErrorClass.forEach((error) => {
+    error.classList.remove("error");
+  });
   genderSelectError.textContent = "";
-  genderContainer.classList.remove("error");
-  genderSelect.classList.remove("error");
-  genderLabel.classList.remove("error");
   ageError.textContent = "";
-  ageContainer.classList.remove("error");
-  ageInput.classList.remove("error");
-  ageLabel.classList.remove("error");
   heightErrorImperial.textContent = "";
-  heightImperialContainer.classList.remove("error");
-  feetInput.classList.remove("error");
-  feetLabel.classList.remove("error");
-  inchInput.classList.remove("error");
-  inchLabel.classList.remove("error");
   weightErrorImperial.textContent = "";
-  weightImperialContainer.classList.remove("error");
-  lbInput.classList.remove("error");
-  lbLabel.classList.remove("error");
   heightErrorMetric.textContent = "";
-  heightMetricContainer.classList.remove("error");
-  cmInput.classList.remove("error");
-  cmLabel.classList.remove("error");
   weightErrorMetric.textContent = "";
-  weightMetricContainer.classList.remove("error");
-  kgInput.classList.remove("error");
-  kgLabel.classList.remove("error");
   activityError.textContent = "";
-  activityContainer.classList.remove("error");
-  activityInput.classList.remove("error");
-  activityLabel.classList.remove("error");
-  activityError.classList.remove("error");
   goalError.textContent = "";
-  goalContainer.classList.remove("error");
-  goalInput.classList.remove("error");
-  goalLabel.classList.remove("error");
 }
