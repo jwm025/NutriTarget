@@ -25,7 +25,7 @@
           <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>.
         </p>
         <label class="acknowledge-label">
-          <input type="checkbox" id="acknowledge" checked />
+          <input type="checkbox" id="acknowledge" />
           I acknowledge and agree
         </label>
         <button class="accept-disclaimer-btn">Accept</button>
@@ -55,7 +55,7 @@
       <div class="nutri-target-header">
         <h1>NutriTarget</h1>
         <div>
-          <button id="recallsButton">Recall</button>
+          <button id="recalls-button">Recall</button>
           <button id="settingsButton" onclick="showSettings()">Settings</button>
         </div>
       </div>
@@ -92,7 +92,7 @@
                 min="18"
                 max="78"
                 step="1"
-                value="56"
+                placeholder="E.g., 18-78"
               />
             </div>
             <div class="age-error"></div>
@@ -108,7 +108,7 @@
                   min="3"
                   max="8"
                   step="any"
-                  value="5"
+                  placeholder="E.g., 3-8"
                 />
               </div>
               <div class="height-inch">
@@ -119,7 +119,7 @@
                   min="0"
                   max="11"
                   step="any"
-                  value="6"
+                  placeholder="E.g., 0-11"
                 />
               </div>
             </div>
@@ -129,7 +129,14 @@
           <div class="height-metric-container">
             <div id="heightMetric" style="display: none">
               <label id="height-label" for="height">Height (cm):</label>
-              <input type="number" id="height" min="90" max="250" step="any" />
+              <input
+                type="number"
+                id="height"
+                min="90"
+                max="250"
+                step="any"
+                placeholder="E.g., 90-250"
+              />
             </div>
             <div class="height-error-metric"></div>
           </div>
@@ -143,7 +150,7 @@
                 min="50"
                 max="500"
                 step="any"
-                value="70"
+                placeholder="E.g., 50-500"
               />
             </div>
             <div class="weight-error-imperial"></div>
@@ -151,7 +158,14 @@
           <div class="weight-metric-container">
             <div id="weightMetric" style="display: none">
               <label id="kg-label" for="weight">Weight (kg):</label>
-              <input type="number" id="weight" min="20" max="250" step="any" />
+              <input
+                type="number"
+                id="weight"
+                min="20"
+                max="250"
+                step="any"
+                placeholder="E.g., 20-250"
+              />
             </div>
             <div class="weight-error-metric"></div>
           </div>
@@ -160,14 +174,7 @@
           <div class="activity-container">
             <div class="activity-label-input">
               <label id="activity-label" for="activity">Activity Level:</label>
-              <input
-                type="range"
-                id="activity"
-                min="0"
-                max="4"
-                step="1"
-                value="3"
-              />
+              <input type="range" id="activity" min="0" max="4" step="1" />
             </div>
             <div class="activity-error"></div>
           </div>
@@ -256,12 +263,55 @@
       <div class="saving-modal">
         <div>Select a set to save</div>
         <div class="slot-container">
-          <div class="slot" id="slot-1"></div>
-          <div class="slot" id="slot-2"></div>
-          <div class="slot" id="slot-3"></div>
+          <div class="slot-save" id="slot-1"></div>
+          <div class="slot-save" id="slot-2"></div>
+          <div class="slot-save" id="slot-3"></div>
         </div>
       </div>
     </div>
+
+    <div class="recall-modal-container">
+      <div class="recall-modal">
+        <div>Select a set to recall</div>
+        <div class="slot-container">
+          <div class="slot-container-div">
+            <div class="slot-recall" id="slot-1"></div>
+            <div class="remove-btn" id="remove-1" data-number="1">X</div>
+          </div>
+          <div class="slot-container-div">
+            <div class="slot-recall" id="slot-2"></div>
+            <div class="remove-btn" id="remove-2" data-number="2">X</div>
+          </div>
+          <div class="slot-container-div">
+            <div class="slot-recall" id="slot-3"></div>
+            <div class="remove-btn" id="remove-3" data-number="3">X</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="recall-output-container">
+      <div id="recall-output">
+        <h2>Results</h2>
+        <div class="calories-info">
+          <div class="daily-calo-container">
+            <div class="daily-calo">Daily Recommended Calories</div>
+            <span id="recall-calories"></span>
+          </div>
+          <div class="macro-info">
+            <div>Macronutrient Ratio</div>
+            <div class="macro-details">
+              <div>Protein: <span id="recall-protein"></span>g</div>
+              <div>Carbs: <span id="recall-carbs"></span>g</div>
+              <div>Fat: <span id="recall-fat"></span>g</div>
+            </div>
+          </div>
+        </div>
+        <h3>Example Meal Plan</h3>
+        <div id="recall-mealPlan"></div>
+      </div>
+    </div>
+
     <script src="ori/script.js"></script>
     <script src="extra/extra.js"></script>
     <script src="modal/modal.js"></script>
