@@ -1,0 +1,29 @@
+.gender-container.error,
+.age-container.error,
+.activity-container.error,
+.goal-container.error,
+.height-imperial-container.error,
+.weight-imperial-container.error,
+.height-metric-container.error,
+.weight-metric-container.error {
+  background-color: #e53935;
+}
+
+#gender.error,
+#age.error,
+#activity.error,
+#goal-select.error,
+#ft.error,
+#in.error,
+#lb.error {
+  border: 1px dashed black;
+}
+
+.activity-error {
+  font: 10px;
+  color: hsl(0, 0%, 30%);
+}
+
+.activity-error.error {
+  color: hsl(0, 0%, 5%);
+}
