@@ -1,3 +1,53 @@
+.nutri-target-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* MAIN CONTENT */
+#mainContent {
+  display: grid;
+  grid-template: 50px 1fr 1fr/ 1fr;
+  padding: 20px 30px;
+  border-radius: 20px;
+}
+
+.nutri-target-header {
+  width: 800px;
+  grid-column: 1/3;
+  padding: 0px 0px;
+}
+
+.bottom-half {
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+}
+
+/* FORM */
+#calc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  grid-column: 1/3;
+  height: 633px;
+}
+
+/* GENDER */
+.gender-container,
+.age-container,
+.activity-container,
+.goal-container,
+.height-imperial-container,
+.weight-imperial-container,
+.height-metric-container,
+.weight-metric-container {
+  display: flex;
+  flex-direction: column;
+  padding: 13px;
+  border-radius: 10px;
+}
+
 .gender-container.error,
 .age-container.error,
 .activity-container.error,
@@ -7,6 +57,44 @@
 .height-metric-container.error,
 .weight-metric-container.error {
   background-color: #e53935;
+}
+
+.gender-label-select,
+.age-label-select,
+.activity-label-input,
+.goal-label-select,
+.height-feet,
+.height-inch,
+#weightImperial,
+#weightMetric,
+#heightMetric {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+#gender,
+#age,
+#goal-select,
+#lb,
+#weight,
+#height {
+  box-sizing: border-box;
+  height: 28px;
+  width: 440px;
+  padding-left: 5px;
+}
+
+#ft,
+#in {
+  box-sizing: border-box;
+  height: 28px;
+  width: 217px;
+  padding-left: 5px;
+}
+
+#ft {
+  margin-right: 6px;
 }
 
 #gender.error,
@@ -28,6 +116,34 @@
   color: hsl(0, 0%, 5%);
 }
 
+/* HEIGHT */
+.height-metric-container {
+  display: none;
+}
+
+#heightImperial {
+  display: flex;
+  flex-direction: row;
+}
+
+.height-imperial-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* WEIGHT */
+.weight-metric-container {
+  display: none;
+}
+
+/* ACTIVITY */
+#activity {
+  box-sizing: border-box;
+  height: 21px;
+  width: 440px;
+}
+
+/* ERROR */
 .select-error,
 .age-error,
 .height-error-imperial,
