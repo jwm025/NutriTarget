@@ -61,8 +61,18 @@ h2, h3 {
   border-radius: 15px;
 }
 
+.acknowledge-check {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .acknowledge-label {
   width: 250px;
+}
+
+#acknowledge {
+  width: 13px;
 }
 
 #settingsModal .modal-content {
