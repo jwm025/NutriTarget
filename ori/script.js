@@ -1,3 +1,4 @@
+
 const breakfasts = [
   { name: "Turkey & Broccoli Omelet", cal: 397, p: 35, c: 26, f: 17 },
   { name: "Strawberries & Cream Overnight Oats", cal: 282, p: 30, c: 27, f: 6 },
@@ -57,8 +58,6 @@ function acceptDisclaimer() {
     alert("Please acknowledge the terms.");
   }
 }
-
-acceptDisclaimer();
 
 function showTerms() {
   document.getElementById("termsModal").style.display = "block";
