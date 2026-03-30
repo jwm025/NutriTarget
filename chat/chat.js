@@ -77,3 +77,11 @@ function getBotResponse(text) {
 window.toggleChat = toggleChat;
 window.closeChat = closeChat;
 window.handleChatSubmit = handleChatSubmit;
+// Reliable click handler
+document.addEventListener('DOMContentLoaded', () => {
+  const chatBtn = document.getElementById('chat-btn');
+  if (chatBtn) {
+    chatBtn.style.cursor = 'pointer';
+    chatBtn.addEventListener('click', toggleChat);
+  }
+});
