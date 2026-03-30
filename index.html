@@ -302,6 +302,24 @@
       </div>
     </div>
 
+    <div id="chat-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;">
+      <div class="chat-window" id="chat-window">
+        <div class="chat-header" id="chat-header">
+          <span>🍎 NutriCoach – Your Personal Nutrition Assistant</span>
+          <span onclick="closeChat()" style="cursor:pointer; font-size:24px;">×</span>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-area">
+          <input 
+            type="text" 
+            id="chat-input" 
+            placeholder="Ask me anything about your plan..." 
+            onkeypress="if(event.key==='Enter') handleChatSubmit()">
+          <button id="chat-send" onclick="handleChatSubmit()">Send</button>
+        </div>
+      </div>
+    </div>
+
     <div id="recall-output-container">
       <div id="recall-output">
         <h2>Results</h2>
@@ -321,19 +339,6 @@
         </div>
         <h3>Example Meal Plan</h3>
         <div id="recall-mealPlan"></div>
-      </div>
-      <div id="chat-modal">
-        <div class="chat-window" id="chat-window">
-          <div class="chat-header" id="chat-header">
-            <span>🍎 NutriCoach – Your Personal Nutrition Assistant</span>
-            <span onclick="closeChat()" style="cursor:pointer; font-size:24px;">×</span>
-          </div>
-          <div class="chat-messages" id="chat-messages"></div>
-          <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Ask me anything about your plan..." onkeypress="if(event.key==='Enter') handleChatSubmit()">
-            <button id="chat-send" onclick="handleChatSubmit()">Send</button>
-          </div>
-        </div>
       </div>
     </div>
 
