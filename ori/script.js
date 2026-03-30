@@ -342,10 +342,12 @@ function scaleMeal(meal, targetCal) {
 }
 
 //CJS exports for jest tests
-module.exports = {
-  calculateBMR,
-  applyActivityMultiplier,
-  calculateAdjustedCalories,
-  calculateMacros,
-  scaleMeal
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    calculateBMR,
+    applyActivityMultiplier,
+    calculateAdjustedCalories,
+    calculateMacros,
+    scaleMeal
+  };
 };
