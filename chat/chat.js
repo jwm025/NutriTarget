@@ -1,11 +1,17 @@
+console.log("✅ chat/chat.js loaded successfully");
 let chatHistory = [];
 
 function toggleChat() {
+  console.log("toggleChat called - nutriContext:", !!window.nutriContext);
   if (!window.nutriContext) {
     alert("Please calculate your nutrition plan first!");
     return;
   }
   const modal = document.getElementById("chat-modal");
+  if (!modal) {
+    alert("Chat modal not found in HTML!");
+    return;
+  }
   modal.style.display = "flex";
   renderChat();
 }
