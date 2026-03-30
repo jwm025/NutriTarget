@@ -1,25 +1,71 @@
-console.log("✅ chat/chat.js loaded successfully");
-let chatHistory = [];
+console.log("✅ chat/chat.js loaded (LLM-ready)");
 
+let chatHistory = [];
+let isUsingLLM = false;
+
+const SYSTEM_PROMPT = `You are NutriCoach, a friendly, encouraging nutrition coach for NutriTarget.
+The user has already calculated their plan. Always reference their exact calories, macros, and goal.
+Be helpful, positive, and concise. Suggest realistic food swaps that still hit their macros.
+Never give medical advice.`;
+
+async function getGeminiKey() {
+  return localStorage.getItem("geminiApiKey") || "";
+}
+
+async function getBotResponse(userText) {
+  const ctx = window.nutriContext;
+  const apiKey = await getGeminiKey();
+
+  // If user has a key → use real LLM
+  if (apiKey) {
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `${SYSTEM_PROMPT}\n\nUser data:\n- Daily calories: ${ctx.calories}\n- Protein: ${ctx.macros.protein}g\n- Carbs: ${ctx.macros.carbs}g\n- Fat: ${ctx.macros.fat}g\n- Goal: ${ctx.goal}\n\nUser question: ${userText}`
+            }]
+          }]
+        })
+      });
+
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a response right now.";
+    } catch (e) {
+      console.warn("LLM failed, falling back to rules", e);
+    }
+  }
+
+  // Fallback to old rule-based (works even without key)
+  if (userText.includes("explain") && userText.includes("calorie")) {
+    return `Your ${ctx.calories} calories come from BMR × activity + your ${ctx.goal} goal adjustment. Want the exact math?`;
+  }
+  if (userText.includes("regenerate") || userText.includes("new plan")) {
+    regenerateMeal();
+    return "✅ Meal plan regenerated! Check the main screen. Anything else?";
+  }
+  if (userText.includes("high protein")) {
+    return `Got it — I can make your next plan higher in protein (${ctx.macros.protein}g target). Just say "regenerate high protein".`;
+  }
+  return `Understood! Your target is ${ctx.calories} cal with ${ctx.macros.protein}g protein. What would you like to tweak? (Try: regenerate, explain calories, high protein, vegetarian lunch)`;
+}
+
+// Keep the rest of your existing functions (toggleChat, renderChat, etc.) unchanged
 function toggleChat() {
-  console.log("toggleChat called - nutriContext:", !!window.nutriContext);
+  console.log("toggleChat called");
   if (!window.nutriContext) {
     alert("Please calculate your nutrition plan first!");
     return;
   }
   const modal = document.getElementById("chat-modal");
-  if (!modal) {
-    alert("Chat modal not found in HTML!");
-    return;
-  }
   modal.style.display = "flex";
   renderChat();
 }
 
 function closeChat() {
-  const modal = document.getElementById("chat-modal");
-  modal.style.display = "none";
-  chatHistory = []; // optional: clear on close
+  document.getElementById("chat-modal").style.display = "none";
 }
 
 function renderChat() {
@@ -35,7 +81,7 @@ function addMessage(text, type) {
   renderChat();
 }
 
-function handleChatSubmit() {
+async function handleChatSubmit() {
   const input = document.getElementById("chat-input");
   const userText = input.value.trim();
   if (!userText) return;
@@ -43,43 +89,13 @@ function handleChatSubmit() {
   addMessage(userText, "user");
   input.value = "";
 
-  // Small delay so user sees their message first
-  setTimeout(() => {
-    const response = getBotResponse(userText.toLowerCase());
+  setTimeout(async () => {
+    const response = await getBotResponse(userText);
     addMessage(response, "bot");
-  }, 400);
+  }, 300);
 }
 
-// RULE-BASED RESPONSES
-function getBotResponse(text) {
-  const ctx = window.nutriContext;
-
-  if (text.includes("explain") && text.includes("calorie")) {
-    return `Your recommended daily calories (${ctx.calories}) come from the Mifflin-St Jeor formula: BMR × activity multiplier + your goal adjustment (${ctx.goal === "lose" ? "-500" : ctx.goal === "gain" ? "+500" : "0"}). Want me to show the exact math?`;
-  }
-
-  if (text.includes("regenerate") || text.includes("new plan")) {
-    regenerateMeal(); // reuses existing function
-    return "✅ Meal plan regenerated! Check the main window. Want me to tweak anything?";
-  }
-
-  if (text.includes("high protein") || text.includes("more protein")) {
-    return `Got it! Your current macros are Protein: ${ctx.macros.protein}g / Carbs: ${ctx.macros.carbs}g / Fat: ${ctx.macros.fat}g. I can regenerate a higher-protein version next time — just say "regenerate high protein".`;
-  }
-
-  if (text.includes("vegetarian") || text.includes("veggie")) {
-    return "I can suggest vegetarian swaps! Try saying: 'vegetarian lunch' or 'regenerate vegetarian plan'.";
-  }
-
-  if (text.includes("why") && text.includes("macro")) {
-    return `You’re on a 30% protein / 40% carbs / 30% fat split — the most balanced for most people. This gives you ${ctx.macros.protein}g protein to support muscle, etc.`;
-  }
-
-  // Default friendly response
-  return `Understood! Your current target is ${ctx.calories} calories with ${ctx.macros.protein}g protein. What would you like to adjust? (Try: "regenerate", "explain calories", "high protein")`;
-}
-
-// Make functions available globally
+// Make functions global
 window.toggleChat = toggleChat;
 window.closeChat = closeChat;
 window.handleChatSubmit = handleChatSubmit;
