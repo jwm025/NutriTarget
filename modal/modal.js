@@ -7,16 +7,14 @@ settingModal.addEventListener("click", (e) => {
   }
 });
 
-// Save Gemini key when settings change
-const openAIKeyInput = document.getElementById("OpenAI-key");
-
-function saveSettings() {
-  const key = openAIKeyInput.value.trim();
-  if (key) {
-    localStorage.setItem("OpenAIApiKey", key);
-    console.log("✅ OpenAI key saved");
-  }
+// Auto-save OpenAI key when it changes
+const openaiKeyInput = document.getElementById("openai-key");
+if (openaiKeyInput) {
+  openaiKeyInput.addEventListener("change", () => {
+    const key = openaiKeyInput.value.trim();
+    if (key) {
+      localStorage.setItem("openaiApiKey", key);
+      console.log("✅ OpenAI API key saved to localStorage");
+    }
+  });
 }
-
-// Call saveSettings whenever the settings modal is closed or changed
-// (You can attach it to the mode toggle or add a "Save Settings" button if you want)
