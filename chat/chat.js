@@ -1,94 +1,5 @@
-console.log("✅ chat/chat.js loaded (OpenAI version)");
-
 let chatHistory = [];
 
-const SYSTEM_PROMPT = `You are NutriCoach, a friendly, encouraging, and practical nutrition coach for the NutriTarget app.
-The user has already calculated their daily calorie and macro targets.
-Always reference their exact numbers and goal in a helpful way.
-Suggest realistic meal swaps or adjustments that still fit their calories and macros.
-Be positive, concise, and conversational. Never give medical advice.`;
-
-async function getOpenAIKey() {
-  return localStorage.getItem("openaiApiKey") || "";
-}
-
-async function saveOpenAIKey(key) {
-  if (key && key.startsWith("sk-")) {
-    localStorage.setItem("openaiApiKey", key);
-    console.log("✅ OpenAI key saved");
-    return true;
-  }
-  return false;
-}
-
-async function getBotResponse(userText) {
-  const ctx = window.nutriContext;
-  let apiKey = await getOpenAIKey();
-
-  // If no key, fall back to rule-based responses
-  if (!apiKey) {
-    return fallbackRuleBased(userText, ctx);
-  }
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",           // cheap & fast (recommended)
-        // model: "gpt-4o" if you want higher quality
-        temperature: 0.7,
-        max_tokens: 400,
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `
-User's nutrition plan:
-- Daily calories: ${ctx.calories}
-- Protein: ${ctx.macros.protein}g
-- Carbs: ${ctx.macros.carbs}g
-- Fat: ${ctx.macros.fat}g
-- Goal: ${ctx.goal}
-
-User question: ${userText}
-          ` }
-        ]
-      })
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error?.message || `HTTP error ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content.trim();
-
-  } catch (error) {
-    console.error("OpenAI error:", error);
-    return `Sorry, I couldn't connect to OpenAI right now (${error.message}). I'll use my basic mode instead. Try pasting your OpenAI key in Settings.`;
-  }
-}
-
-// Simple fallback when no key is provided
-function fallbackRuleBased(userText, ctx) {
-  const lower = userText.toLowerCase();
-  if (lower.includes("explain") && lower.includes("calorie")) {
-    return `Your recommended ${ctx.calories} calories are calculated from your BMR × activity level + your ${ctx.goal} goal adjustment.`;
-  }
-  if (lower.includes("regenerate") || lower.includes("new plan")) {
-    regenerateMeal();
-    return "✅ Meal plan regenerated on the main screen! What else can I help with?";
-  }
-  if (lower.includes("high protein")) {
-    return `I can help make a higher-protein version. Your current protein target is ${ctx.macros.protein}g. Say "regenerate high protein" next time.`;
-  }
-  return `Got it! You're targeting ${ctx.calories} calories (${ctx.macros.protein}g protein, ${ctx.macros.carbs}g carbs, ${ctx.macros.fat}g fat) with a ${ctx.goal} goal. What would you like to adjust or learn more about?`;
-}
-
-// ==================== UI Functions (unchanged from before) ====================
 function toggleChat() {
   if (!window.nutriContext) {
     alert("Please calculate your nutrition plan first!");
@@ -100,7 +11,9 @@ function toggleChat() {
 }
 
 function closeChat() {
-  document.getElementById("chat-modal").style.display = "none";
+  const modal = document.getElementById("chat-modal");
+  modal.style.display = "none";
+  chatHistory = []; // optional: clear history when closing
 }
 
 function renderChat() {
@@ -116,7 +29,7 @@ function addMessage(text, type) {
   renderChat();
 }
 
-async function handleChatSubmit() {
+function handleChatSubmit() {
   const input = document.getElementById("chat-input");
   const userText = input.value.trim();
   if (!userText) return;
@@ -124,15 +37,40 @@ async function handleChatSubmit() {
   addMessage(userText, "user");
   input.value = "";
 
-  // Show thinking indicator (optional)
-  const thinkingId = "thinking-" + Date.now();
-  addMessage("...", "bot"); // temporary
+  // Small delay so user sees their message first
+  setTimeout(() => {
+    const response = getBotResponse(userText.toLowerCase());
+    addMessage(response, "bot");
+  }, 400);
+}
 
-  const response = await getBotResponse(userText);
+// ==================== RULE-BASED RESPONSES ====================
+function getBotResponse(text) {
+  const ctx = window.nutriContext;
 
-  // Replace thinking message
-  chatHistory.pop();
-  addMessage(response, "bot");
+  if (text.includes("explain") && text.includes("calorie")) {
+    return `Your recommended daily calories (${ctx.calories}) come from the Mifflin-St Jeor formula: BMR × activity multiplier + your goal adjustment (${ctx.goal === "lose" ? "-500" : ctx.goal === "gain" ? "+500" : "0"}). Want me to show the exact math?`;
+  }
+
+  if (text.includes("regenerate") || text.includes("new plan")) {
+    regenerateMeal(); // reuses your existing function!
+    return "✅ Meal plan regenerated! Check the main window. Want me to tweak anything?";
+  }
+
+  if (text.includes("high protein") || text.includes("more protein")) {
+    return `Got it! Your current macros are Protein: ${ctx.macros.protein}g / Carbs: ${ctx.macros.carbs}g / Fat: ${ctx.macros.fat}g. I can regenerate a higher-protein version next time — just say "regenerate high protein".`;
+  }
+
+  if (text.includes("vegetarian") || text.includes("veggie")) {
+    return "I can suggest vegetarian swaps! Try saying: 'vegetarian lunch' or 'regenerate vegetarian plan'.";
+  }
+
+  if (text.includes("why") && text.includes("macro")) {
+    return `You’re on a 30% protein / 40% carbs / 30% fat split — the most balanced for most people. This gives you ${ctx.macros.protein}g protein to support muscle, etc.`;
+  }
+
+  // Default friendly response
+  return `Understood! Your current target is ${ctx.calories} calories with ${ctx.macros.protein}g protein. What would you like to adjust? (Try: "regenerate", "explain calories", "high protein")`;
 }
 
 // Make functions available globally
