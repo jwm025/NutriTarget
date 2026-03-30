@@ -260,6 +260,8 @@
             Regenerate Meal Plan
           </button>
           <button id="saving-btn" type="button">Save</button>
+          <button onclick="toggleChat()" style="background:hsl(120,50%,72%); color:white; border:none; border-radius:10px; padding:10px 20px;">
+            💬 Chat with NutriCoach</button>
         </div>
       </div>
     </div>
@@ -315,6 +317,19 @@
         <h3>Example Meal Plan</h3>
         <div id="recall-mealPlan"></div>
       </div>
+      <div id="chat-modal">
+        <div class="chat-window" id="chat-window">
+          <div class="chat-header" id="chat-header">
+            <span>🍎 NutriCoach – Your Personal Nutrition Assistant</span>
+            <span onclick="closeChat()" style="cursor:pointer; font-size:24px;">×</span>
+          </div>
+          <div class="chat-messages" id="chat-messages"></div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask me anything about your plan..." onkeypress="if(event.key==='Enter') handleChatSubmit()">
+            <button id="chat-send" onclick="handleChatSubmit()">Send</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="ori/script.js"></script>
@@ -322,5 +337,6 @@
     <script src="modal/modal.js"></script>
     <script src="color/color.js"></script>
     <script src="saving/saving.js"></script>
+    <script src="chat/chat.js"></script>
   </body>
 </html>
