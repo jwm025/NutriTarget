@@ -215,6 +215,13 @@ function calculate() {
   document.getElementById("carbs").innerText = carbs;
   document.getElementById("fat").innerText = fat;
   generateMealPlan();
+  // Make data available to chatbot
+  window.nutriContext = {
+    calories: currentCal,
+    macros: { protein, carbs, fat },
+    goal: goal,
+    userInputs: { gender, age, weight, height, activityIndex: activityIndex }
+  };
   document.getElementById("output").style.display = "flex";
 }
 
