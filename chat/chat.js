@@ -1,60 +1,95 @@
-console.log("✅ chat/chat.js loaded (LLM-ready)");
+console.log("✅ chat/chat.js loaded (OpenAI version)");
 
 let chatHistory = [];
-let isUsingLLM = false;
 
-const SYSTEM_PROMPT = `You are NutriCoach, a friendly, encouraging nutrition coach for NutriTarget.
-The user has already calculated their plan. Always reference their exact calories, macros, and goal.
-Be helpful, positive, and concise. Suggest realistic food swaps that still hit their macros.
-Never give medical advice.`;
+const SYSTEM_PROMPT = `You are NutriCoach, a friendly, encouraging, and practical nutrition coach for the NutriTarget app.
+The user has already calculated their daily calorie and macro targets.
+Always reference their exact numbers and goal in a helpful way.
+Suggest realistic meal swaps or adjustments that still fit their calories and macros.
+Be positive, concise, and conversational. Never give medical advice.`;
 
-async function getGeminiKey() {
-  return localStorage.getItem("geminiApiKey") || "";
+async function getOpenAIKey() {
+  return localStorage.getItem("openaiApiKey") || "";
+}
+
+async function saveOpenAIKey(key) {
+  if (key && key.startsWith("sk-")) {
+    localStorage.setItem("openaiApiKey", key);
+    console.log("✅ OpenAI key saved");
+    return true;
+  }
+  return false;
 }
 
 async function getBotResponse(userText) {
   const ctx = window.nutriContext;
-  const apiKey = await getGeminiKey();
+  let apiKey = await getOpenAIKey();
 
-  // If user has a key → use real LLM
-  if (apiKey) {
-    try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `${SYSTEM_PROMPT}\n\nUser data:\n- Daily calories: ${ctx.calories}\n- Protein: ${ctx.macros.protein}g\n- Carbs: ${ctx.macros.carbs}g\n- Fat: ${ctx.macros.fat}g\n- Goal: ${ctx.goal}\n\nUser question: ${userText}`
-            }]
-          }]
-        })
-      });
+  // If no key, fall back to rule-based responses
+  if (!apiKey) {
+    return fallbackRuleBased(userText, ctx);
+  }
 
-      const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a response right now.";
-    } catch (e) {
-      console.warn("LLM failed, falling back to rules", e);
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",           // cheap & fast (recommended)
+        // model: "gpt-4o" if you want higher quality
+        temperature: 0.7,
+        max_tokens: 400,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: `
+User's nutrition plan:
+- Daily calories: ${ctx.calories}
+- Protein: ${ctx.macros.protein}g
+- Carbs: ${ctx.macros.carbs}g
+- Fat: ${ctx.macros.fat}g
+- Goal: ${ctx.goal}
+
+User question: ${userText}
+          ` }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error?.message || `HTTP error ${response.status}`);
     }
-  }
 
-  // Fallback to old rule-based (works even without key)
-  if (userText.includes("explain") && userText.includes("calorie")) {
-    return `Your ${ctx.calories} calories come from BMR × activity + your ${ctx.goal} goal adjustment. Want the exact math?`;
+    const data = await response.json();
+    return data.choices[0].message.content.trim();
+
+  } catch (error) {
+    console.error("OpenAI error:", error);
+    return `Sorry, I couldn't connect to OpenAI right now (${error.message}). I'll use my basic mode instead. Try pasting your OpenAI key in Settings.`;
   }
-  if (userText.includes("regenerate") || userText.includes("new plan")) {
-    regenerateMeal();
-    return "✅ Meal plan regenerated! Check the main screen. Anything else?";
-  }
-  if (userText.includes("high protein")) {
-    return `Got it — I can make your next plan higher in protein (${ctx.macros.protein}g target). Just say "regenerate high protein".`;
-  }
-  return `Understood! Your target is ${ctx.calories} cal with ${ctx.macros.protein}g protein. What would you like to tweak? (Try: regenerate, explain calories, high protein, vegetarian lunch)`;
 }
 
-// Keep the rest of your existing functions (toggleChat, renderChat, etc.) unchanged
+// Simple fallback when no key is provided
+function fallbackRuleBased(userText, ctx) {
+  const lower = userText.toLowerCase();
+  if (lower.includes("explain") && lower.includes("calorie")) {
+    return `Your recommended ${ctx.calories} calories are calculated from your BMR × activity level + your ${ctx.goal} goal adjustment.`;
+  }
+  if (lower.includes("regenerate") || lower.includes("new plan")) {
+    regenerateMeal();
+    return "✅ Meal plan regenerated on the main screen! What else can I help with?";
+  }
+  if (lower.includes("high protein")) {
+    return `I can help make a higher-protein version. Your current protein target is ${ctx.macros.protein}g. Say "regenerate high protein" next time.`;
+  }
+  return `Got it! You're targeting ${ctx.calories} calories (${ctx.macros.protein}g protein, ${ctx.macros.carbs}g carbs, ${ctx.macros.fat}g fat) with a ${ctx.goal} goal. What would you like to adjust or learn more about?`;
+}
+
+// ==================== UI Functions (unchanged from before) ====================
 function toggleChat() {
-  console.log("toggleChat called");
   if (!window.nutriContext) {
     alert("Please calculate your nutrition plan first!");
     return;
@@ -89,13 +124,18 @@ async function handleChatSubmit() {
   addMessage(userText, "user");
   input.value = "";
 
-  setTimeout(async () => {
-    const response = await getBotResponse(userText);
-    addMessage(response, "bot");
-  }, 300);
+  // Show thinking indicator (optional)
+  const thinkingId = "thinking-" + Date.now();
+  addMessage("...", "bot"); // temporary
+
+  const response = await getBotResponse(userText);
+
+  // Replace thinking message
+  chatHistory.pop();
+  addMessage(response, "bot");
 }
 
-// Make functions global
+// Make functions available globally
 window.toggleChat = toggleChat;
 window.closeChat = closeChat;
 window.handleChatSubmit = handleChatSubmit;
