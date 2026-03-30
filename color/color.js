@@ -20,6 +20,8 @@ toggleMode.addEventListener("change", () => {
     recallModal.classList.add("dark");
     saveModal.classList.add("dark");
     recallOutput.classList.add("dark");
+    document.getElementById("chat-window").classList.add("dark");
+    document.getElementById("chat-header").classList.add("dark");
   } else {
     document.body.classList.remove("dark");
     mainContent.classList.remove("dark");
@@ -30,5 +32,7 @@ toggleMode.addEventListener("change", () => {
     recallModal.classList.remove("dark");
     saveModal.classList.remove("dark");
     recallOutput.classList.remove("dark");
+    document.getElementById("chat-window").classList.remove("dark");
+    document.getElementById("chat-header").classList.remove("dark");
   }
 });
